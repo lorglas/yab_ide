@@ -1,0 +1,22 @@
+Version 2.3
+
+New features
+- implementation of bind function in the toolbar
+- implementation of Backup folder and Settings
+
+bugs closed
+- reorganization of some menu points
+- autocompletion settings (reorganization of directories )
+- change of font type and style possible / not size
+- Export as HTML, config completed
+- GUI issue solved
+
+OpenPoints
+- Redo function missing
+- Printing doesen't work correct
+- Translation isn't working, is an issue from yab itselfs. Needed to checked.
+- The font size is deactivated because the font size cannot be calculated for each font
+
+2.2.7 
+"Open project folder" now opens the proper folder.
+Many updates to the help tab.
