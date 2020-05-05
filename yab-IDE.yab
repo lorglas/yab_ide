@@ -4375,7 +4375,7 @@ if (IfExists(documentation_directory$+"/yabasic.html")) then
 	//option set "ToolbarBuild", "Enabled", 1
 	MENU SET "Help","Yabasic manual","Enable","MainView"
 else
-	Alert "yab-commands documentation isn't installed", "Ok", "Info"
+	Alert "Yabasic documentation isn't installed", "Ok", "Info"
 	//option set "ToolbarBuild", "Enabled", 0
 	MENU SET "Help","Yabasic manual","Disable","MainView"
 endif
