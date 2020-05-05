@@ -11,11 +11,41 @@ doc Enjoy.
 versionnumber$="2.3"
 
 //Search Directories
+app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
+REM ---GFX DIR---
+gfxDir$=app_directory$+"/img/"
+
 user_settings$=trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
 home_directory$=trim$(system$("finddir B_USER_DIRECTORY"))
-documentation_directory$=trim$(system$("finddir B_SYSTEM_DOCUMENTATION_DIRECTORY"))
-print "docdir\n"
-print documentation_directory$+"\n"
+documentation_directory$=trim$(system$("finddir B_SYSTEM_DOCUMENTATION_DIRECTORY"))+"/yab/"
+
+if (IfExists(documentation_directory$)=0) then	
+else
+	globalHelpDir$ = documentation_directory$
+endif
+
+
+find_ideDir$=user_settings$+"/yab-ide/" //+"/apps/yab/" //settingsYabbDir$ + "yab-IDE/"
+	
+if (IfExists(find_ideDir$+"/yab-ide/data")=0) then	
+	output$=system$("mkdir -p "+find_ideDir$+"data")
+	output$=system$("cp -ur "+app_directory$+"data "+ user_settings$+"/yab-ide")
+endif
+if (IfExists(find_ideDir$+"/yab-ide/Language")=0) then	
+	output$=system$("mkdir -p "+find_ideDir$+"Language")
+	output$=system$("cp -ur "+app_directory$+"Language "+user_settings$+"/yab-ide")
+endif
+
+if(IfExists(find_ideDir$)) then
+	find_ideDir$=user_settings$+"/yab-ide/"
+endif
+if (IfExists(home_directory$+"/yab_work/Templates")=0) then	
+	output$=system$("mkdir -p "+home_directory$+"/yab_work/Templates")
+	output$=system$("cp -ur "+app_directory$+"/Templates "+home_directory$+"/yab_work/")
+endif
+REM ---TEMPLATE DIR---
+templateDir$=home_directory$+"/yab_work/"
+
 //yab-bin under
 //bin_dir1$=trim$(system$("finddir B_USER_NONPACKAGED_BIN_DIRECTORY"))
 //bin_dir2$=trim$(system$("finddir B_USER_BIN_DIRECTORY"))
@@ -34,13 +64,15 @@ yabpath$=trim$(system$("finddir B_SYSTEM_BIN_DIRECTORY"))
 if (system("test -e "+yabpath$+"/yab") = 0) then
 	yabBIN$= yabpath$+"/yab"
 endif
+//copy config files
+if (IfExists(buildDir$)) then
+else
+	output$=system$("mkdir -p boot/home/yab_work/BuildFactory")		
+	buildDir$ = home_directory$+"/yab_work/BuildFactory/" //directory of the build-factory
+endif
 
-//if (system("test -e /Share/Projekte/c/64bit/yab-IDE/") = 0) then
-//	find_ideDir$="/Share/Projekte/c/64bit/yab-IDE/"
-//else
-	find_ideDir$=trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))+"/yab-ide/" //+"/apps/yab/" //settingsYabbDir$ + "yab-IDE/"
-//print find_ideDir$
-//endif
+
+
 
 settingsRCSOff = true
 globalConfigDir$ = user_settings$ +"/yab-ide/"
@@ -57,7 +89,7 @@ if(LoadSettings() = 1) then
 	globalProjectDir$ = home_directory$+"/yab_work/Programs/" //directory of the programs
 	ideDir$ = find_ideDir$ //directory of the yab-IDE 	
 	buildDir$ = home_directory$+"/yab_work/BuildFactory/" //directory of the build-factory 
-	globalHelpDir$ = Documentation_directory$ + "/Documentation/"
+	globalHelpDir$ = documentation_directory$
 	settingsLangUse = true
 	settingsLangPath$ = find_ideDir$+"Language/Dictionaries/x-vnd.yab-IDE" //"Language/Dictionaries/yab-IDE" //
 	settingsAutoIndent = true
@@ -125,7 +157,7 @@ globalRealOS$ = left$(globalRealOS$, 4)
 oldSpinner = 1
 
 if(settingsLangUse) then
-	print settingsLangPath$
+	//print settingsLangPath$
 	localize settingsLangPath$
 	localize Mimetype$
 endif
@@ -137,7 +169,7 @@ UpdateStatusbar()
 
 LoadOpenFiles()
 set_up_BuildFactory()
-
+check_docu()
 if(settingsFullScreen) then
 	menu set "View", "Full screen", "mark", "MainView"
 	window set "MainView", "moveto", 0,0
@@ -501,7 +533,7 @@ while(inloop)
 				SetRunParameters()
 				break
 			case "ToolbarBind"
-			case MyTranslate$("MainView:Program:Build Factory...")
+			case MyTranslate$("MainView:Program:Bind...")
 				isNotSaved = textedit get "Text"+str$(globalCurrentText), "hasChanged"
 				askForSaving = 3
 				if(settingsAskForSaving and isNotSaved) then 
@@ -757,11 +789,13 @@ while(inloop)
 			case MyTranslate$("MainView:Help:yab Commands:german")
 				system("open "+globalHelpDir$+"yab-Commands-de &")
 				break
-            case MyTranslate$("MainView:Help:Short command help...")
+            case MyTranslate$("MainView:Help:yab Commands:english")
+			//print globalHelpDir$+"yabasic.html &"
 				system("open "+globalHelpDir$+"yab-Commands &")
 			break
-				case MyTranslate$("MainView:Help:Yabasic manual...")
-				system("open "+globalHelpDir$+"yabasic.html &")
+			case MyTranslate$("MainView:Help:Yabasic manual")
+				//print globalHelpDir$+"yabasic.html"
+				LAUNCH globalHelpDir$+"yabasic.html"
 			break 
 			case MyTranslate$("MainView:Help:Online resources:German BeUsergroup...")
 				system("open http://www.beusergroup.de &")
@@ -958,8 +992,8 @@ while(inloop)
 		endif
 
 		// something dropped on the project columnbox
-		print msg$(i)
-		print left$(msg$(i),instr(msg$(i),":")) 
+		//print msg$(i)
+		//print left$(msg$(i),instr(msg$(i),":")) 
 		if(left$(msg$(i),17) = "Tree1:_Dropped:") then
 			foundEmpty = 0
 			for j=1 to MAXFILES
@@ -1131,7 +1165,7 @@ sub OpenMainWindow()
 
 	window open x/2-250-3000, y/2-200-3000 to x/2+249-3000,y/2+199-3000, "Splash", ""
 	window set "Splash", "look", "bordered"
-	err = draw image 0,0, ideDir$+"img/Splash.png", "Splash"
+	err = draw image 0,0, gfxDir$+"Splash.png", "Splash"
 	draw set "HighColor", 56,61,127, "Splash" 
 	draw set "DejaVu Sans Mono,Bold,18", "Splash"
 	draw text 30, 280, "Version "+versionnumber$, "Splash"
@@ -1146,14 +1180,19 @@ sub OpenMainWindow()
 	// set all menus
 	menu "File", "New...", "N", "MainView"
 	menu "File", "Open...", "O", "MainView"
+	menu "File", "--", "", "MainView"
+	//menu "File", "Templates","", "MainView"
+	//menu "File", "--", "", "MainView"
 	menu "File", "Close", "W", "MainView"
 	menu "File", "--", "", "MainView"
 	menu "File", "Save", "S", "MainView"
 	menu "File", "Save as...", "", "MainView"
 	menu "File", "Save as template...", "", "MainView"
 	menu "File", "Export as HTML...", "", "MainView"
-	menu "File", "Backup", "", "MainView"
+	
 	menu "File", "--", "", "MainView"
+	menu "File", "Backup", "", "MainView"
+	
 	menu "File", "--", "", "MainView"
 	menu "File", "Page setup...", "", "MainView"
 	menu "File", "Print...", "P", "MainView"
@@ -1176,6 +1215,8 @@ sub OpenMainWindow()
 	menu "Program", "Run in Terminal", "T", "MainView"
 	menu "Program", "--", "", "MainView"
 	menu "Program", "Set run parameters...", "SR", "MainView"
+	menu "Program", "--", "", "MainView"
+	menu "Program", "Bind...", "", "MainView"
 	menu "Program", "--", "", "MainView"
 	menu "Program", "Build Factory...", "B", "MainView"
 	menu "Program", "--", "", "MainView"
@@ -1221,16 +1262,15 @@ sub OpenMainWindow()
 	submenu "Help", "Introduction to the IDE", "english", "", "MainView"	
 	menu "Help", "--", "", "MainView"
 	menu "Help", "yab Commands", "H", "MainView"
-	submenu "Help", "yab Commands", "german", "", "MainView"
+	//submenu "Help", "yab Commands", "german", "", "MainView"
 	submenu "Help", "yab Commands", "english", "", "MainView"	
 	//menu "Help", "GUI Commands", "", "MainView"
-	submenu "Help", "GUI Commands", "german", "", "MainView"	
-	submenu "Help", "GUI Commands", "english", "", "MainView"
-	menu "Help", "Yabasic Manual", "M", "MainView"	
+	//submenu "Help", "GUI Commands", "german", "", "MainView"	
+	//submenu "Help", "GUI Commands", "english", "", "MainView"
 	menu "Help", "--", "", "MainView"	
 	//menu "Help", "Short command help...", "H", "MainView"
-	//menu "Help", "Yabasic manual...", "M", "MainView"
-	//menu "Help", "--", "", "MainView"
+	menu "Help", "Yabasic manual", "M", "MainView"
+	menu "Help", "--", "", "MainView"
 	menu "Help", "Online resources", "", "MainView"
 	submenu "Help", "Online resources", "BeSly database...", "", "MainView"
 	submenu "Help", "Online resources", "German BeUsergroup...", "", "MainView"
@@ -1245,7 +1285,7 @@ sub OpenMainWindow()
 	menu "Help", "About...", "", "MainView"
 
 	// set the toolbar
-	ToolbarCreate(0,peek("menuheight")+1,2000, "Toolbar", ideDir$+"img/", "MainView")
+	ToolbarCreate(0,peek("menuheight")+1,2000, "Toolbar", gfxDir$, "MainView")
 	ToolbarAddIcon("ToolbarNew", "New", "newp.png", "newn.png", "newd.png")
 	ToolbarAddIcon("ToolbarOpen", "Open", "openp.png", "openn.png", "opend.png")
 	ToolbarAddIcon("ToolbarSave", "Save", "savep.png", "saven.png", "saved.png")
@@ -1279,7 +1319,7 @@ sub OpenMainWindow()
 	draw set "highcolor", 239,239,239, "Toolbar"
 	draw line 460,5 to 460,25, "Toolbar"
 
-	button image 570,7, "ToolbarFind", ideDir$+"img/searchp.png", ideDir$+"img/searchn.png", ideDir$+"img/searchd.png", "Toolbar"
+	button image 570,7, "ToolbarFind", gfxDir$+"img/searchp.png", gfxDir$+"img/searchn.png", gfxDir$+"img/searchd.png", "Toolbar"
 	tooltip "ToolbarFind", "Find"
 	textcontrol 590,3 to 790,20, "ToolbarText", "", settingsOldSearch$, "Toolbar"
 	draw set "highcolor", 185,185,185, "Toolbar"
@@ -1425,7 +1465,7 @@ sub OpenMainWindow()
 	view (settingsWidth-settingsVSplitDivider-57)/2-150,(settingsHSplitDivider-1)/2-190 to (settingsWidth-settingsVSplitDivider-57)/2+150,(settingsHSplitDivider-1)/2+190, "Logo", "Stack"+str$(MAXFILES+2)
 	draw set "bgcolor", 255,255,255, "Stack"+str$(MAXFILES+2)
 	draw set "bgcolor", 255,255,255, "Logo"
-	err = draw image 0,0 to 300,-1, ideDir$+"img/logo.png", "Logo"
+	err = draw image 0,0 to 300,-1, gfxDir$+"img/logo.png", "Logo"
 	stackview set "Stack", MAXFILES+2
 	stackview set "Lines", MAXFILES+2
 	layout "standard", "Stack"+str$(MAXFILES+2)
@@ -1696,8 +1736,8 @@ sub NewDocument(foundEmpty)
 	
 	text 10,50, "NewText1", "Please select one of the available templates for your program:", "NewWindow"
 	listbox 10,70 to 166,200, "NewList", 1, "NewWindow"
-
-	handle = open(ideDir$+"Templates/TemplateList", "r")
+	listbox clear "NewList"
+	handle = open(templateDir$+"Templates/TemplateList", "r")
 	if(handle>0) then
 		nTemplates = 0
 		while(not eof(handle))
@@ -1723,7 +1763,7 @@ sub NewDocument(foundEmpty)
 	textcontrol 10,220 to 400,240, "NewName", "Name:", browse$, "NewWindow"
 	button 410,220 to 490,240, "NewBrowse", "Browse...", "NewWindow"
 
-	checkbox image 10,270, "NewAdvanced", ideDir$+"img/arrowdown.png", ideDir$+"img/arrowright.png", "", "", false, "NewWindow"
+	checkbox image 10,270, "NewAdvanced", gfxDir$+"arrowdown.png", gfxDir$+"arrowright.png", "", "", false, "NewWindow"
 	winSize = false
 	text 20,270, "NewText2", "Advanced Options", "NewWindow"
 	button 430,260 to 490,280, "NewOk", "Ok", "NewWindow"
@@ -1756,7 +1796,7 @@ sub NewDocument(foundEmpty)
 	while(inloop)
 		n = split(message$, msg$(), "|")
 		for i = 1 to n
-			if(DEBUG and msg$(i)<>"") print msg$(i)
+			if(DEBUG and msg$(i)<>"") //print msg$(i)
 			if(left$(msg$(i),16) = "NewList:_Invoke:") then
 				msg$(i) = "NewOk"
 			endif
@@ -1767,7 +1807,7 @@ sub NewDocument(foundEmpty)
 						if(arraysize(tmp$(), 1) = 1) then
 							txt$ = ""
 						else
-							handle = open(ideDir$+"Templates/"+tmp$(j), "r")
+							handle = open(templateDir$+"Templates/"+tmp$(j), "r")
 							if(handle) then
 								while(not eof(handle))
 									txt$ = txt$ + GetLine$(handle)+"\n"
@@ -1831,24 +1871,27 @@ sub NewDocument(foundEmpty)
 						if((j-1)/4+1 < 4) then
 							alert "This standard template can not be deleted!", "Ok", "warning"
 						else	
-							handle = open(ideDir$+"Templates/TemplateList", "r")
+							handle = open(templateDir$+"Templates/TemplateList", "r")
 							handle2 = open("/tmp/TemplateList", "w")
 							if(handle) then
 								if(handle2) then
 									while(not eof(handle))
 										t$ = GetLine$(handle)+"\n"
+										
 										if(left$(t$,len(t$)-1)<>tmp$(j)) then
+										
 											print #handle2 t$;
 										else
+											t$ = GetLine$(handle)+"\n"
 											t$ = GetLine$(handle)+"\n"
 											t$ = GetLine$(handle)+"\n"
 											t$ = GetLine$(handle)+"\n"
 										endif
 									wend
 									close(handle2)
-									system("mv /tmp/TemplateList "+ideDir$+"Templates/TemplateList")
-									system("rm "+ideDir$+tmp$(j+1))
-									system("rm "+ideDir$+"Templates/"+tmp$(j))
+									system("mv /tmp/TemplateList "+templateDir$+"Templates/TemplateList")
+									system("rm "+templateDir$+tmp$(j+1))
+									system("rm "+templateDir$+"Templates/"+tmp$(j))
 									listbox remove "NewList", (j-1)/4+1
 									listbox select "NewList", (j-5)/4+1
 									msg$(i) = "NewList:_Select:"+str$((j-5)/4+1)
@@ -1870,7 +1913,8 @@ sub NewDocument(foundEmpty)
 				draw flush "NewImage"
 				j = (val(mid$(msg$(i),17,len(msg$(i))-1))-1)*4+1
 				if(arraysize(tmp$(),1)>=j+1) then
-					err = draw image 50,0 to 250,100, ideDir$+tmp$(j+1), "NewImage"
+				//print templateDir$+tmp$(j+1)
+					err = draw image 50,0 to 250,100, templateDir$+tmp$(j+1), "NewImage"
 				endif
 				if(arraysize(tmp$(),1)>=j+2) then
 					draw text 10,110, tmp$(j+2), "NewImage"
@@ -2047,7 +2091,7 @@ sub WaitWindow(text$)
 	window set "WaitWindow", "feel", "modal-app" 
 	window set "WaitWindow", "look", "modal" 
 	window set "WaitWindow", "Flags", "not-closable, not-zoomable, not-h-resizable, not-v-resizable"
-	err = draw image 0,0, ideDir$+"img/Loading.png", "WaitWindow"
+	err = draw image 0,0, gfxDir$+"Loading.png", "WaitWindow"
 
 	w = draw get "text-width", GetFileName$(text$), "WaitWindow"
 	text 143-w/2,32, "TWait", GetFileName$(text$), "WaitWindow"
@@ -2080,7 +2124,7 @@ sub RunProgram(yabFile$)
 	window set "Running", "feel", "modal-app" 
 	window set "Running", "look", "modal" 
 	window set "Running", "Flags", "not-closable, not-zoomable, not-h-resizable, not-v-resizable"
-	err = draw image 0,0, ideDir$+"img/Running.png", "Running"
+	err = draw image 0,0, gfxDir$+"Running.png", "Running"
 
 	w = draw get "text-width", GetFileName$(yabFile$), "Running"
 	text 143-w/2,32, "TRunning", GetFileName$(yabFile$), "Running"
@@ -2144,7 +2188,7 @@ sub RunInTerminal(yabFile$)
 	window set "Running", "feel", "modal-app" 
 	window set "Running", "look", "modal" 
 	window set "Running", "Flags", "not-closable, not-zoomable, not-h-resizable, not-v-resizable"
-	err = draw image 0,0, ideDir$+"img/Running.png", "Running"
+	err = draw image 0,0, gfxDir$+"Running.png", "Running"
 
 	w = draw get "text-width", GetFileName$(yabFile$), "Running"
 	text 168-w/2,32, "TRunning", GetFileName$(yabFile$), "Running"
@@ -2232,7 +2276,7 @@ sub AboutWindow()
 	width = draw get "text-width", "Version "+versionnumber$, "AboutWindow"
 	draw text 200-width/2, 40, "Version "+versionnumber$, "AboutWindow"
 
-	t = draw image 120,40 to 280,-1, ideDir$+"img/yablogo.png", "AboutWindow"
+	t = draw image 120,40 to 280,-1, gfxDir$+"yablogo.png", "AboutWindow"
 
 	button 100,295 to 300,320, "AboutButton", "Close", "AboutWindow"
 	option set "AboutButton", "focus", true
@@ -2269,7 +2313,7 @@ sub SaveAsTemplate()
 	textcontrol 10,70 to 380,90, "SaveTempName", "Template Name", "", "SaveTempWindow"
 	text 10,98, "SaveTempText2", "Description (not more than 30 characters per line)", "SaveTempWindow"
 	textcontrol 5,110 to 380,120, "SaveTempDes1", "", "", "SaveTempWindow"
-	textcontrol 5,130 to 380,150, "SaveTempDes2", "", "", "SaveTempWindow"
+	textcontrol 5,135 to 380,155, "SaveTempDes2", "", "", "SaveTempWindow"
 
 	draw set "highcolor", 0,0,0, "SaveTempWindow"
 	draw set "lowcolor", 255,255,0, "SaveTempWindow"
@@ -2328,16 +2372,18 @@ sub SaveAsTemplate()
 					description1$ = left$(textcontrol get$ "SaveTempDes1", 30)
 					description2$ = left$(textcontrol get$ "SaveTempDes2", 30)
 					imageShort$ = GetFileName$(image$)
-					system("cp "+image$+" "+ideDir$+"Templates/img/"+imageShort$)
-					handle = open(ideDir$+"Templates/TemplateList", "a")
+					//print templateDir$
+					system("cp "+image$+" "+templateDir$+"Templates/img/"+imageShort$)
+					handle = open(templateDir$+"Templates/TemplateList", "a")
 					if(handle) then
-						print #handle "#"
+						//print #handle "#"
 						print #handle name$
 						print #handle "Templates/img/"+imageShort$
 						print #handle description1$
 						print #handle description2$
+						print #handle "#"
 						close(handle)
-						handle2 = open(ideDir$+"Templates/"+name$, "w")
+						handle2 = open(templateDir$+"Templates/"+name$, "w")
 						if(handle2) then
 							t$ = textedit get$ "Text"+str$(globalCurrentText)
 							print #handle t$;
@@ -2444,7 +2490,7 @@ sub BackupSource()
 	local binName$
 	binName$=globalAllNames$(globalCurrentText)
 	backupfolder$=binName$
-	print backupfolder$
+	//print backupfolder$
 	dim folderdepth$(1)
 	folderdepth = split(backupfolder$, folderdepth$(), "/")
 	x=1
@@ -2555,7 +2601,7 @@ sub Building()
 	while(inloop)
 		n = split(message$, msg$(), "|")
 		for i = 1 to n
-			if(DEBUG and msg$(i)<>"") print msg$(i)
+			if(DEBUG and msg$(i)<>"") //print msg$(i)
 			switch(msg$(i))
 				case "BuildBuild"
 					textedit clear "BuildOutput"
@@ -2567,7 +2613,7 @@ sub Building()
 					if AppSig$="" AppSig$="application/x-vnd.yab-app"
 					binName$=textcontrol get$ "BuildPath"
 					textedit add "BuildOutput", MyTranslate$("Please wait, processing... (this may take a long time!)\n\n")
-					print "cd "+buildDir$+"; "+yabDir$+" BuildFactory.yab "+binName$+" "+globalAllNames$(globalCurrentText)+" "+AppSig$+" 2>&1\n\n"
+					//print "cd "+buildDir$+"; "+yabDir$+" BuildFactory.yab "+binName$+" "+globalAllNames$(globalCurrentText)+" "+AppSig$+" 2>&1\n\n"
 					result$ = system$("cd "+buildDir$+";  yab BuildFactory.yab "+binName$+" "+globalAllNames$(globalCurrentText)+" "+AppSig$+" yab-ide  2>&1")
 					textedit add "BuildOutput", result$
 					
@@ -2813,10 +2859,10 @@ dim part$()
 		n = split(message$, msg$(), "|")		
 		for i = 1 to n
 		
-			if(DEBUG and msg$(i)<>"") print msg$(i)
+			if(DEBUG and msg$(i)<>"") //print msg$(i)
 				if (left$(msg$(i),18) = "OptACList:_Select:" ) then
 					select_OptACList$=mid$(msg$(i),19,len(msg$(i)))
-					print select_OptACList$
+					//print select_OptACList$
 				endif
 			switch(msg$(i))
 				case "_QuitRequested"
@@ -2852,7 +2898,7 @@ dim part$()
 					break
 				
 				case "OptACRemove"
-					print select_OptACList$
+					//print select_OptACList$
 					LISTBOX REMOVE "OptACList",val(select_OptACList$)
 					
 					handle = open(ideDir$+"data/autocompletion", "w")
@@ -2967,7 +3013,7 @@ dim part$()
 							spincontrol set "OptACNum", settingsACNumChar
 							break
 						case 3
-						print "yabdir "+ system$("test -d "+yabpath$)
+						//print "yabdir "+ system$("test -d "+yabpath$)
 							if(system("test -d "+yabpath$)=1) then
 							
 								settingsYabDir$ = yabpath$
@@ -4205,6 +4251,7 @@ sub SaveSettings()
 	return
 end sub
 
+
 sub set_up_BuildFactory()
 
 local DataDir$
@@ -4313,4 +4360,23 @@ for i=1 to COLUMNBOX COUNT "FileBox"
 if (GetFileName$(globalAllNames$(i)) = CurrentSelection$) OpenProjectDir$ =  GetDirectory$(globalAllNames$(i)):break
 next
 return OpenProjectDir$
+end sub
+sub check_docu()
+
+if (IfExists(documentation_directory$+"/yab-Commands")) then
+	//option set "ToolbarBuild", "Enabled", 1
+	MENU SET "Help","yab Commands","Enable","MainView"
+else
+	Alert "yab-commands documentation isn't installed", "Ok", "Info"
+	//option set "ToolbarBuild", "Enabled", 0
+	MENU SET "Help","yab Commands","Disable","MainView"
+endif
+if (IfExists(documentation_directory$+"/yabasic.html")) then
+	//option set "ToolbarBuild", "Enabled", 1
+	MENU SET "Help","Yabasic manual","Enable","MainView"
+else
+	Alert "yab-commands documentation isn't installed", "Ok", "Info"
+	//option set "ToolbarBuild", "Enabled", 0
+	MENU SET "Help","Yabasic manual","Disable","MainView"
+endif
 end sub
