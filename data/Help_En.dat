@@ -283,6 +283,8 @@ Sound:sound stop
 Sound:sound play
 Sound:bell
 Sound:beep
+Sound:Mediasound play
+Sound:Mediasound stop
 String Handling:val()
 String Handling:upper$()
 String Handling:trim$()
@@ -8957,6 +8959,7 @@ Explanation:
 This first loads the file "bach.mp3" and then plays it until it ends.
 
 Related: sound play, sound stop
+
 &
 &Window
 &
@@ -9287,4 +9290,48 @@ A small demo window is opened with the floating look and feel. It can only be re
 
 Related:
 window open, window close, window count, window get
+&
+&
+Mediasound play
+
+Name:
+Mediasound play -- play sound / stream file 
+
+Synopsis:
+Mediasound play (file$)
+
+Description:
+To play a sound file named Filename$ which can be of any supported format (e.g. WAV, MP3, etc.) sound play will return a number Id. Use Id to have basic control with the two other sound commands: sound wait and sound stop.
+MEDIASOUND you must wait a little before you hear the stream:
+
+Example:
+ID = MEDIASOUND PLAY SoundFile$
+sleep 3
+MEDIASOUND STOP ID
+Explanation:
+
+This first loads the file SoundFile$, plays it for three seconds and then stops it.
+
+Related: mediasound play, mediasound stop
+&
+MEDIASOUND STOP
+
+Name:
+MEDIASOUND STOP ID -- stop playing a sound file
+
+Synopsis:
+MEDIASOUND STOP ID
+
+Description:
+Stop a sound that is playing with the valid identification number Id.
+
+Example:
+ID = MEDIASOUND PLAY SoundFile$
+sleep 3
+MEDIASOUND STOP ID
+Explanation:
+
+This first loads the file SoundFile$, plays it for three seconds and then stops it.
+
+Related: mediasound stop
 &
