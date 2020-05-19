@@ -9300,7 +9300,8 @@ Synopsis:
 Mediasound play (file$)
 
 Description:
-To play a sound file named Filename$ which can be of any supported format (e.g. WAV, MP3, etc.) sound play will return a number Id. Use Id to have basic control with the two other sound commands: sound wait and sound stop.
+To play a sound file named Filename$ which can be of any supported format (e.g. WAV, MP3, etc.) sound play will return a number ID. 
+ID give 1 back. this is needed to stop playing.
 MEDIASOUND you must wait a little before you hear the stream:
 
 Example:
