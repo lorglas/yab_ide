@@ -662,9 +662,7 @@ window get
 293188
 window set
 295022
-&
-299589
-Mediasound play
-299605
-MEDIASOUND STOP
-300219
+
+299588
+Mediasound stop
+300218
