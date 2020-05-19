@@ -9291,7 +9291,7 @@ A small demo window is opened with the floating look and feel. It can only be re
 Related:
 window open, window close, window count, window get
 &
-&
+
 Mediasound play
 
 Name:
@@ -9314,7 +9314,7 @@ This first loads the file SoundFile$, plays it for three seconds and then stops 
 
 Related: mediasound play, mediasound stop
 &
-MEDIASOUND STOP
+Mediasound stop
 
 Name:
 MEDIASOUND STOP ID -- stop playing a sound file
