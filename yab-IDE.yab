@@ -4287,8 +4287,10 @@ local ddir$
 DataDir$=trim$(system$("finddir B_USER_DIRECTORY"))
 
 //instr(a$,"mimetype")
-	if (IfExists(buildDir$)) then
-		if (IfExists(buildDir$+"YabMain.cpp")) then
+	if (IfExists(buildDir$)=0) then
+		if (IfExists(buildDir$+"BuildFactory.yab")=1) then
+			option set "ToolbarBuild", "Enabled", 1
+			MENU SET "Program","Build Factory...","Enable","MainView"
 			//x$=system$("mkdir -p "+buildDir$)
 			//system("mkdir -p ~/config/settings/yab")
 			x=1
@@ -4306,18 +4308,17 @@ DataDir$=trim$(system$("finddir B_USER_DIRECTORY"))
 			close #1
 			close #2
 			output$=system$("chmod 777 -R "+buildDir$)
-			option set "ToolbarBuild", "Enabled", 1
-			MENU SET "Program","Build Factory...","Enable","MainView"
+			
 		else
 			Alert "BuildFactory isn't installed", "Ok", "Info"
-			option set "ToolbarBuild", "Enabled", 0
+			option set "ToolbarBuild", "Enabled", false
 			MENU SET "Program","Build Factory...","Disable","MainView"
 		endif
-	else
-		Alert "BuildFactory isn't installed", "Ok", "Info"
-		option set "ToolbarBuild", "Enabled", 0
+	//else
+		//Alert "BuildFactory isn't installed", "Ok", "Info"
+		//option set "ToolbarBuild", "Enabled", 0
 		
-		MENU SET "Program","Build Factory...","Disable","MainView"
+		//MENU SET "Program","Build Factory...","Disable","MainView"
 	endif
 	
 end sub
