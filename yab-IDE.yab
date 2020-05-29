@@ -2641,7 +2641,7 @@ sub Building()
 					//option set "BuildBrowse", "enabled", true 
 					option set "AppSig", "enabled", true
 					
-					if(IfExists(buildDir$+"/"+binName$)) then
+					if(IfExists(outputdir$+binName$)=1) then
 						alert "Build was successful", "Ok", "info"
 					else
 						alert "Build failed!", "Ok", "warning"
