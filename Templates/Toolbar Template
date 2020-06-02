@@ -61,9 +61,8 @@ sub OpenWindow()
 	menu "View", "Options...", "", "MainView" 
 	menu "Help", "Help", "H", "MainView"
 	menu "Help", "About", "A", "MainView"
-	
-//	Toolbar Template  uses /boot/home/yab_work/Programs/img for the image path.
-MainDir$="/boot/home/yab_work/Programs/"
+//	Toolbar Template  uses /boot/system/apps/yab-IDE/img for the image path.
+MainDir$="/boot/system/apps/yab-IDE/"
 // 	Use your own path to your images.
 
 

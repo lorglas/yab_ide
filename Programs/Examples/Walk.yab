@@ -17,7 +17,7 @@ while(not quitting)
 	for a = 0 to 400 step (30/7)
 		DRAW SET "highcolor",255,255,255,"MyCanvas"
 		draw rect 0,0 to a+29,55, "MyCanvas"
-		draw bitmap a,0, str$(mod(a/(30/7),6) +1),"copy", "MyCanvas"
+		draw bitmap a,0, str$(mod(a/(30/7),6) +1),"alpha", "MyCanvas"
 		sleep 00.2
 
 		m$ = message$
