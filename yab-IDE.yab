@@ -43,6 +43,20 @@ if (IfExists(home_directory$+"/yab_work/Templates")=0) then
 	output$=system$("mkdir -p "+home_directory$+"/yab_work/Templates")
 	output$=system$("cp -ur "+app_directory$+"/Templates "+home_directory$+"/yab_work/")
 endif
+if (IfExists(home_directory$+"/yab_work/Examples")=0) then
+	//output$=system$("mkdir -p "+home_directory$+"/yab_work/Templates")
+	output$=system$("cp -r "+app_directory$+"Programs/Examples "+home_directory$+"/yab_work/")
+endif
+
+//lib dir
+
+if(IfExists(home_directory$+"/config/settings/yab")=0) then
+	output$=system$("mkdir -p "+home_directory$+"/config/settings/yab")
+	output$=system$("cp -ur "+app_directory$+"/Programs/libs/* "+home_directory$+"/config/settings/yab")
+	
+endif
+
+
 REM ---TEMPLATE DIR---
 templateDir$=home_directory$+"/yab_work/"
 
@@ -1326,7 +1340,7 @@ sub OpenMainWindow()
 	draw set "highcolor", 239,239,239, "Toolbar"
 	draw line 460,5 to 460,25, "Toolbar"
 
-	button image 570,7, "ToolbarFind", gfxDir$+"img/searchp.png", gfxDir$+"img/searchn.png", gfxDir$+"img/searchd.png", "Toolbar"
+	button image 570,7, "ToolbarFind", gfxDir$+"searchp.png", gfxDir$+"searchn.png", gfxDir$+"searchd.png", "Toolbar"
 	tooltip "ToolbarFind", "Find"
 	textcontrol 590,3 to 790,20, "ToolbarText", "", settingsOldSearch$, "Toolbar"
 	draw set "highcolor", 185,185,185, "Toolbar"
@@ -1464,7 +1478,7 @@ sub OpenMainWindow()
 	textedit color "Text"+str$(MAXFILES+1), "color1", "Message:"
 	textedit color "Text"+str$(MAXFILES+1), "color1", "Related:"
 	SyntaxLoadTree(ideDir$+"data/Help_En.dat", "HelpTree") 
-
+	//Treebox sort "HelpTree"
 	// UpdateLines(0, globalHSplitDivider-1-peek("scrollbarwidth"), 1, 15)
 	UpdateLines(0, 1200, 1, globalRealFontSize) //change to settingsFontSize
 	layout "h-center, v-center", "Stack"+str$(MAXFILES+2)
@@ -3887,6 +3901,7 @@ sub SyntaxLoadTree(TreeFile$, TreeBoxID$)
    			switch level
     				case 0  // toplevel
      					treebox add TreeBoxID$, tmp$
+						
      					break
     				case 1  // sublevel
      					n = instr(tmp$, ":")
@@ -3900,7 +3915,9 @@ sub SyntaxLoadTree(TreeFile$, TreeBoxID$)
   		endif
  	wend
 	close handle
+	
 	return 1
+	
 end sub
 
 // Read the info text for Command$ from TreeFile$ with the index file IndexFile$.
