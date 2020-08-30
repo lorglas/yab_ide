@@ -8897,18 +8897,16 @@ Name:
 sound play -- play a sound file
 
 Synopsis:
-Id = SOUND PLAY Filename$
+Id = SOUND PLAY Filename$, loop
 
 Description:
 To play a sound file named Filename$ which can be of any supported format (e.g. WAV, MP3, etc.) sound play will return a number Id. Use Id to have basic control with the two other sound commands: sound wait and sound stop.
-
-If the file could not load, Id will be set to -1.
 
 Design:
 In a GUI context use sound wisely. Remember that not everyone can hear the sound, e.g. because sound is turned off, not supported or the user is deaf or hard-of-hearing. Thus, do not put important information for your application in speech files only. Additionally, remember that bells and whistles on each mouse click can become very annoying.
 
 Example:
-id = sound play "bach.mp3"
+id = sound play "bach.mp3" , 1
 while(1)
 wend
 Explanation:
@@ -8917,20 +8915,19 @@ This loads the file "bach.mp3" and then waits forever (use Ctrl-C or Break to en
 
 Related: sound stop, sound wait
 &
-sound stop
+sound stop 1
 
 Name:
 sound stop -- stop playing a sound file
 
 Synopsis:
 SOUND STOP Id
-SOUND STOP(Id)
 
 Description:
 Stop a sound that is playing with the valid identification number Id.
 
 Example:
-id = sound play "bach.mp3"
+id = sound play "bach.mp3", 1
 sleep 3
 sound stop id
 Explanation:
@@ -8945,14 +8942,13 @@ Name:
 sound wait -- waits until a sound file is finished playing
 
 Synopsis:
-SOUND WAIT Id
-SOUND WAIT(Id)
+SOUND WAIT ID
 
 Description:
 After the a sound file named Id started playing, use this command to wait until the file finished playing.
 
 Example:
-id = sound play "bach.mp3"
+id = sound play "bach.mp3", 1
 sound wait id
 Explanation:
 

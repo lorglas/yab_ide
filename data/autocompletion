@@ -75,6 +75,7 @@ loop
 lower$
 ltrim$
 max
+mediasound
 menu
 message$
 mid$
@@ -90,6 +91,7 @@ paste$
 pause
 peek
 peek$
+play
 pi
 poke
 popupmenu
@@ -126,7 +128,7 @@ sin
 sleep
 slider
 sort
-soundplay
+sound 
 spincontrol
 split
 split$
@@ -136,6 +138,7 @@ sqrt
 stackview
 static
 step
+stop
 str$
 sub
 submenu
