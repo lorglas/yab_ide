@@ -8,7 +8,7 @@ doc
 doc The yab-IDE provides you with an integrated development suite for yab
 doc Enjoy.
 
-versionnumber$="2.3"
+versionnumber$="2.3.1"
 
 //Search Directories
 app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
