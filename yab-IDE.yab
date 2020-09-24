@@ -8,7 +8,7 @@ doc
 doc The yab-IDE provides you with an integrated development suite for yab
 doc Enjoy.
 
-versionnumber$="2.3.1"
+versionnumber$="2.3.2"
 
 //Search Directories
 app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
@@ -90,7 +90,7 @@ globalConfigDir$ = user_settings$ +"/yab-ide/"
 if(LoadSettings() = 1) then
 
 	MAXFILES = 20
-	DEBUG = true
+	DEBUG = false
 	//bin File of yab
 	settingsYabDir$ = yabpath$ //find yab Directory 
 	yabDir$ = yabBIN$ //find yab itself
@@ -135,6 +135,7 @@ if(LoadSettings() = 1) then
 	globalRealFontSize = 18
 	settingsYabParam$ = ""
 	settingsProgParam$ = ""
+	
 
 	dim globalAllNames$(MAXFILES)
 	dim globalTextFinder(MAXFILES)
@@ -143,6 +144,7 @@ if(LoadSettings() = 1) then
 		globalAllNames$(i) = ""
 		globalTextFinder(i) = 0
 	next i
+	//buildfactory= ""
 
 endif
 restartSettingsLangUse = settingsLangUse
@@ -203,12 +205,12 @@ while(inloop)
 	sleep 0.01
 	n = split(message$, msg$(), "|")
 	for i = 1 to n
-	
+		
 		if(DEBUG and msg$(i)<>"") then
 			//print msg$(i)
 		endif
+		
 		switch(msg$(i))
-			
 			case "ToolbarNew"
 			case MyTranslate$("MainView:File:New...")
 				foundEmpty = 0
@@ -251,6 +253,7 @@ while(inloop)
 								break
 							endif
 						next j
+						
 						if(foundProject) then
 							break
 						endif
@@ -272,6 +275,7 @@ while(inloop)
 							stackview set "Lines", globalCurrentText
 							globalAllNames$(globalCurrentText) = tmp$
 							t = columnbox count "FileBox" 
+							
 							columnbox add "FileBox", 1, t+1,20,"__Mime__=application/x-vnd.yab-app"
 							columnbox add "FileBox", 2, t+1,20, GetFileName$(tmp$) //  "Filename", t, GetFileName$(tmp$)
 							columnbox select "FileBox", t+1
@@ -325,7 +329,8 @@ while(inloop)
 					else
 						for j = 1 to MAXFILES
 							if(globalTextFinder(j) = globalTextFinder(globalCurrentText)-1) then
-								newCurrent = j
+							
+							newCurrent = j
 								break
 							endif
 						next j
@@ -377,6 +382,7 @@ while(inloop)
 									t = columnbox count "FileBox"
 									columnbox add "FileBox", 1, t+1,20, "__Mime__=application/x-vnd.yab-app"
 									columnbox add "FileBox", 2, t+1,20, GetFileName$(globalAllNames$(j))
+									
 									break
 								endif
 							next k
@@ -953,6 +959,7 @@ while(inloop)
 			if(DEBUG) print searchLineNum
 			option set "Text"+str$(globalCurrentText), "Focus", true
 		endif
+		
 
 		// the find and replace tabview
 		// if(left$(msg$(i),11) = "FindTCFind:" and ) then
@@ -968,17 +975,6 @@ while(inloop)
 			ImmediateExec(right$(msg$(i), len(msg$(i))-15))
 		endif
 
-		// the project columnbox
-		if(left$(msg$(i),15) = "FileBox:_Select") then
-			tmp$ = right$(msg$(i),len(msg$(i))-16)
-			for tmpFiles = 1 to MAXFILES // arraysize(globalTextFinder(),1)
-				if(DEBUG) print val(tmp$), globalTextFinder(tmpFiles)
-				if(globalTextFinder(tmpFiles)=val(tmp$)) then
-					ActivateText(tmpFiles)
-					break
-				endif
-			next tmpFiles
-		endif
 
 		// something dropped on the textedit
 		if(left$(msg$(i),18) = "V2Split2:_Dropped:" and globalCurrentText<>0) then
@@ -1001,6 +997,17 @@ while(inloop)
 			else
 				alert MyTranslate$("Error while loading file:\n\n")+tmp$, "Ok", "warning"
 			endif
+		endif
+		// the project columnbox
+		if(left$(msg$(i),15) = "FileBox:_Select") then
+			tmp$ = right$(msg$(i),len(msg$(i))-16)
+			for tmpFiles = 1 to MAXFILES // arraysize(globalTextFinder(),1)
+				if(DEBUG) print val(tmp$), globalTextFinder(tmpFiles)
+				if(globalTextFinder(tmpFiles)=val(tmp$)) then
+					ActivateText(tmpFiles)
+					break
+				endif
+			next tmpFiles
 		endif
 
 		// something dropped on the project columnbox
@@ -1379,12 +1386,13 @@ sub OpenMainWindow()
 	tabview 0,1 to settingsVSplitDivider-1,vsplitheight-32, "Tree", "bottom", "VSplit1"
 	tabview add "Tree", " Files "
 	tabview add "Tree", " Help "
-	columnbox 0,0 to settingsVSplitDivider-10,vsplitheight-42-peek("tabheight"), "FileBox", false, "no-border, resizable", "Tree1"
+	layout "left,bottom,right", "Tree1"
+	columnbox 0,0 to settingsVSplitDivider-10,vsplitheight-42-peek("tabheight"), "FileBox", false, "no-border, resizable,no-sorting", "Tree1"
 	columnbox column "FileBox", " ", 1, 20, 20, 20, "align-center"
 	columnbox column "FileBox", "Filename",2, 300, 32, settingsVSplitDivider-32, "align-left"
 	columnbox color "FileBox", "Selection-Active", 220,220,250 
 	columnbox color "FileBox", "Row-Divider", 255,255,255 
-
+	layout "standard", "Tree1"
 	treebox 0,0 to settingsVSplitDivider-10, vsplitheight-42-peek("tabheight")-40, "HelpTree", 1, "Tree2"
 	layout "left,bottom,right", "Tree2"
 	textcontrol 0,vsplitheight-42-peek("tabheight")-30 to settingsVSplitDivider-14,vsplitheight-42-peek("tabheight")-10, "HelpFind", "Command", "", "Tree2"
@@ -1850,6 +1858,7 @@ sub NewDocument(foundEmpty)
 						t = columnbox count "FileBox"
 						columnbox add "FileBox", 1, t+1,20, "__Mime__=application/x-vnd.yab-app"
 						columnbox add "FileBox", 2, t+1,20, GetFileName$(browse$)
+						
 						columnbox select "FileBox", t+1
 
 						globalTextFinder(globalCurrentText) = t+1
@@ -2039,7 +2048,7 @@ sub ActivateText(num)
 	stackview set "Stack", globalCurrentText
 	stackview set "Lines", globalCurrentText
 	option set "Text"+str$(globalCurrentText), "focus", true
-	columnbox select "FileBox", globalTextFinder(num)
+	columnbox select "FileBox", globalTextFinder(num)//x_filebox 
 	oldScroll = -1  
 	return
 end sub
@@ -2738,6 +2747,7 @@ sub OptionWindow()
 	if(not settingsRCSOff) treebox add "OptTree", "Environment", "Version Control", true
 	treebox add "OptTree", "Environment", "Language", true
 	treebox add "OptTree", "Environment", "Directories", true
+	treebox add "OptTree", "Environment", "Buildfactory", true
 	treebox add "OptTree", "Backup"
 	treebox add "OptTree", "Backup", "Settings", true
 	treebox add "OptTree", "Export"
@@ -2750,7 +2760,7 @@ sub OptionWindow()
 	// MyLine(0,362,650,362,"OptWindow")
 
 	optCurrent = 1
-	stackview 150,50 to 640,390, "OptStack", 6, "OptWindow"
+	stackview 150,50 to 640,390, "OptStack", 7, "OptWindow"
 
 	// General
 	boxview 0,0 to 490, 340, "OptBox3", "General", 2, "OptStack1"
@@ -2884,7 +2894,15 @@ sub OptionWindow()
 	MyLine(10,180,470-20,180,"OptBox12")
 	checkbox 10,200, "settingsNo-Robots", "don't allow searchengines to add your site into there database", META_Robots, "OptBox12"
 	MyLine(10,290,470-20,290,"OptBox12")
-	button 320,297 to 470,317, "HTMLSettings_Save", "Take over", "OptBox12"	
+	button 320,297 to 470,317, "HTMLSettings_Save", "Take over", "OptBox12"
+	
+	boxview 5,0 to 490, 340, "OptBox13", "Reminder for installed buildfactory", 2, "OptStack7"
+	if (buildfactory=2) then
+		buildfactory_check=0
+	elseif (buildfactory=1) then
+		buildfactory_check=1
+	endif
+	checkbox 10,20, "OptReminder", "Yes / No", buildfactory_check, "OptBox13"
 
 	window set "OptWindow", "moveto", x,y
 dim part$()
@@ -3009,6 +3027,12 @@ dim part$()
 					META_Description$=textcontrol get$ "META_Description"
 					META_Keywords$=textcontrol get$ "META_Keywords"
 					break
+				case "OptReminder:ON"
+					buildfactory=1
+				break
+				case "OptReminder:OFF"
+					buildfactory=2
+				break
 				// Default
 				case "OptDefault"
 					t = stackview get "OptStack"
@@ -3072,6 +3096,8 @@ dim part$()
 								alert "Restart yab-IDE to change localization", "Ok", "info"
 							endif
 							break
+						
+						
 					end switch
 					break
 			end switch
@@ -3108,7 +3134,7 @@ dim part$()
 					case MyTranslate$("Language"): t = 4: break
 					case MyTranslate$("Settings"): t = 5: break
 					case MyTranslate$("HTML-Settings"): t = 6: break
-					// case MyTranslate$("Version Control"): t = 6: break
+					case MyTranslate$("Buildfactory"): t = 7: break
 					default: t = 0: break
 				end switch
 				if(t>0) then 
@@ -3156,6 +3182,7 @@ dim part$()
 		if(spincontrol get "OptBackupSpin" <> settingsBackupTime) then
 			settingsBackupTime= spincontrol get "OptBackupSpin"
 		endif
+		
 		
 	wend
 
@@ -3877,6 +3904,7 @@ end sub
 
 // Load the syntax tree into the given tree box from the TreeFile$ file.
 sub SyntaxLoadTree(TreeFile$, TreeBoxID$)
+	//TreeFile$="/Share/Projekte/c/yab/yab_ide/data/Help_En.dat"
 	local info, level, handle, inloop
 	local tmp$
 
@@ -4100,6 +4128,7 @@ sub LoadSettings()
 				case 48: META_Description$ = tmp$:break
 				case 49: META_Keywords$ = tmp$:break
 				case 50: META_Robots = val(tmp$):break
+				case 51: buildfactory= val(tmp$): break
 			end switch
 		endif
 	wend
@@ -4145,7 +4174,8 @@ sub LoadOpenFiles()
 				stackview set "Lines", globalCurrentText
 				t = columnbox count "FileBox" 
 				columnbox add "FileBox", 1, t+1,20, "__Mime__=application/x-vnd.yab-app"
-				columnbox add "FileBox", 2, t+1,20, GetFileName$(globalAllNames$(j)) //  "Filename", t, GetFileName$(tmp$)
+				columnbox add "FileBox", 2, t+1,20, GetFileName$(globalAllNames$(j))				//  "Filename", t, GetFileName$(tmp$)
+				
 				columnbox select "FileBox", t+1
 				globalTextFinder(globalCurrentText) = t+1
 				option set "Text"+str$(globalCurrentText), "focus", true
@@ -4273,12 +4303,18 @@ sub SaveSettings()
 		print #handle settingsLineNumber
 		print #handle "# yabIDE backup times (default is 5)"
 		print #handle settingsBackupTime
-		print #handle "# yabIDE html export"
+		print #handle "# yabIDE html export:META_TITLE"
 		print #handle META_Title$
+		print #handle "# yabIDE html export:META_Author"
 		print #handle META_Author$
+		print #handle "# yabIDE html export:META_Description"
 		print #handle META_Description$
+		print #handle "# yabIDE html export:META_Keywords"
 		print #handle META_Keywords$
+		print #handle "# yabIDE html export:META_Robots"
 		print #handle META_Robots
+		print #handle "# buildfactory"
+		print #handle buildfactory
 		close(handle)
 	endif
 
@@ -4327,9 +4363,14 @@ DataDir$=trim$(system$("finddir B_USER_DIRECTORY"))
 			output$=system$("chmod 777 -R "+buildDir$)
 			
 		else
-			Alert "BuildFactory isn't installed", "Ok", "Info"
+			//print "buildfactory"+str$(buildfactory)
+			if (buildfactory=1) then
+				buildfactory = ALERT "BuildFactory isn't installed. Remind me on next startup", "Yes", "No", "","Info"
+			endif
+			//Alert "BuildFactory isn't installed. Remind me on next startup", "Ok", "Info"
 			option set "ToolbarBuild", "Enabled", false
 			MENU SET "Program","Build Factory...","Disable","MainView"
+			 SaveSettings()
 		endif
 	//else
 		//Alert "BuildFactory isn't installed", "Ok", "Info"
