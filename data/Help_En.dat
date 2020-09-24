@@ -18,332 +18,332 @@ System
 & Here the sub levels start (they are added as TREEBOX ADD adds).
 & sublevel
 Arithmetic:** or ^
-Arithmetic:xor()
-Arithmetic:tan()
-Arithmetic:sqrt()
-Arithmetic:sqr()
-Arithmetic:sin()
-Arithmetic:sig()
-Arithmetic:ran()
-Arithmetic:pi
-Arithmetic:or()
-Arithmetic:mod()
-Arithmetic:min()
-Arithmetic:max()
-Arithmetic:log()
-Arithmetic:int()
-Arithmetic:frac()
-Arithmetic:exp()
-Arithmetic:euler
-Arithmetic:eor()
-Arithmetic:dec()
-Arithmetic:cos()
-Arithmetic:bin$()
-Arithmetic:atan()
-Arithmetic:asin()
-Arithmetic:and()
-Arithmetic:acos()
 Arithmetic:abs()
-Conditions and Loops:while
-Conditions and Loops:wend
-Conditions and Loops:until
-Conditions and Loops:true
-Conditions and Loops:then
-Conditions and Loops:switch
-Conditions and Loops:step
-Conditions and Loops:return
-Conditions and Loops:repeat
-Conditions and Loops:logical or
-Conditions and Loops:on interrupt
-Conditions and Loops:on goto
-Conditions and Loops:on gosub
-Conditions and Loops:not
-Conditions and Loops:next
-Conditions and Loops:loop
-Conditions and Loops:label
-Conditions and Loops:if
-Conditions and Loops:goto
-Conditions and Loops:gosub
-Conditions and Loops:for
-Conditions and Loops:fi
-Conditions and Loops:false
-Conditions and Loops:endif
-Conditions and Loops:end
-Conditions and Loops:elsif
-Conditions and Loops:else
-Conditions and Loops:do
-Conditions and Loops:default
-Conditions and Loops:continue
-Conditions and Loops:case
-Conditions and Loops:break
+Arithmetic:acos()
+Arithmetic:and()
+Arithmetic:asin()
+Arithmetic:atan()
+Arithmetic:bin$()
+Arithmetic:cos()
+Arithmetic:dec()
+Arithmetic:eor()
+Arithmetic:euler
+Arithmetic:exp()
+Arithmetic:frac()
+Arithmetic:int()
+Arithmetic:log()
+Arithmetic:max()
+Arithmetic:min()
+Arithmetic:mod()
+Arithmetic:or()
+Arithmetic:pi
+Arithmetic:ran()
+Arithmetic:sig()
+Arithmetic:sin()
+Arithmetic:sqr()
+Arithmetic:sqrt()
+Arithmetic:tan()
+Arithmetic:xor()
 Conditions and Loops:and
-Data Processing:restore
-Data Processing:redim
-Data Processing:read
-Data Processing:dim
-Data Processing:data
-Data Processing:arraysize()
+Conditions and Loops:break
+Conditions and Loops:case
+Conditions and Loops:continue
+Conditions and Loops:default
+Conditions and Loops:do
+Conditions and Loops:else
+Conditions and Loops:elsif
+Conditions and Loops:end
+Conditions and Loops:endif
+Conditions and Loops:false
+Conditions and Loops:fi
+Conditions and Loops:for
+Conditions and Loops:gosub
+Conditions and Loops:goto
+Conditions and Loops:if
+Conditions and Loops:label
+Conditions and Loops:logical or
+Conditions and Loops:loop
+Conditions and Loops:next
+Conditions and Loops:not
+Conditions and Loops:on gosub
+Conditions and Loops:on goto
+Conditions and Loops:on interrupt
+Conditions and Loops:repeat
+Conditions and Loops:return
+Conditions and Loops:step
+Conditions and Loops:switch
+Conditions and Loops:then
+Conditions and Loops:true
+Conditions and Loops:until
+Conditions and Loops:wend
+Conditions and Loops:while
 Data Processing:arraydim()
+Data Processing:arraysize()
+Data Processing:data
+Data Processing:dim
+Data Processing:read
+Data Processing:redim
+Data Processing:restore
 Input and Output:;
-Input and Output:using
-Input and Output:tell
-Input and Output:seek()
-Input and Output:screen
-Input and Output:reverse
-Input and Output:putscreen
-Input and Output:print
-Input and Output:open
-Input and Output:line input
-Input and Output:input
-Input and Output:inkey$
-Input and Output:getscreen$()
-Input and Output:eof
-Input and Output:colour
-Input and Output:color
-Input and Output:close
-Input and Output:clear screen
 Input and Output:at()
-Graphical User Interface:Window 
-Window :window set
-Window :window open
-Window :window get
-Window :window count
-Window :window close
-Window :filepanel
-Window :alert
-Graphical User Interface:Widgets
-Widgets:Treebox
-Treebox:treebox sort
-Treebox:treebox select
-Treebox:treebox remove
-Treebox:treebox get$
-Treebox:treebox expand
-Treebox:treebox count
-Treebox:treebox collapse
-Treebox:treebox clear
-Treebox:treebox add
-Treebox:treebox
-Widgets:Tooltip
-Tooltip:tooltip color
-Tooltip:tooltip
-Widgets:TextURL
-TextURL:texturl color
-TextURL:texturl
-Widgets:Textedit
-Textedit:textedit set
-Textedit:textedit get$
-Textedit:textedit get
-Textedit:textedit color
-Textedit:textedit clear
-Textedit:textedit add
-Textedit:textedit
-Widgets:Textcontrol
-Textcontrol:textcontrol set
-Textcontrol:textcontrol get$
-Textcontrol:textcontrol clear
-Textcontrol:textcontrol
-Widgets:Text
-Text:text set
-Text:text
-Widgets:Statusbar
-Statusbar:statusbar set
-Statusbar:statusbar
-Widgets:Spincontrol
-Spincontrol:spincontrol set
-Spincontrol:spincontrol get
-Spincontrol:spincontrol
-Widgets:Slider
-Slider:slider set
-Slider:slider label
-Slider:slider get
-Slider:slider color
-Slider:slider
-Widgets:Radiobutton
-Radiobutton:radiobutton set
-Radiobutton:radiobutton
-Widgets:Options
-Options:option set
-Options:option color
-Widgets:Listbox
-Listbox:listbox sort
-Listbox:listbox select
-Listbox:listbox remove
-Listbox:listbox get$
-Listbox:listbox get
-Listbox:listbox count
-Listbox:listbox clear
-Listbox:listbox add
-Listbox:listbox
-Widgets:Dropbox
-Dropbox:dropbox select
-Dropbox:dropbox remove
-Dropbox:dropbox get$
-Dropbox:dropbox count
-Dropbox:dropbox clear
-Dropbox:dropbox add
-Dropbox:dropbox
-Widgets:Columnbox
-Columnbox:columnbox select
-Columnbox:columnbox remove
-Columnbox:columnbox get$
-Columnbox:columnbox get
-Columnbox:columnbox count
-Columnbox:columnbox column
-Columnbox:columnbox color
-Columnbox:columnbox clear
-Columnbox:columnbox add
-Columnbox:columnbox
-Widgets:Colorcontrol
-Colorcontrol:colorcontrol set
-Colorcontrol:colorcontrol get
-Colorcontrol:colorcontrol
-Widgets:Checkbox
-Checkbox:checkbox set
-Checkbox:checkbox image
-Checkbox:checkbox
-Widgets:Calendar
-Calendar:calendar set
-Calendar:calendar get$
-Calendar:calendar
-Widgets:Button
-Button:button image
-Button:button
-Graphical User Interface:Views
-Views:View 
-View :view remove
-View :view get
-View :view dropzone
-View :view
-Views:Tabview
-Tabview:tabview set
-Tabview:tabview get
-Tabview:tabview add
-Tabview:tabview
-Views:Stackview
-Stackview:stackview set
-Stackview:stackview get
-Stackview:stackview
-Views:Splitview
-Splitview:splitview set
-Splitview:splitview get
-Splitview:splitview
-Views:Scrollbar
-Scrollbar:scrollbar set
-Scrollbar:scrollbar get
-Scrollbar:scrollbar
-Views:layout
-Views:canvas
-Views:Boxview
-Boxview:boxview set
-Boxview:boxview
-Graphical User Interface:Printing
-Printing:printer setup
-Printing:printer
-Graphical User Interface:Menus
-Menus:submenu set
-Menus:submenu
-Menus:popupmenu
-Menus:menu set
-Menus:menu
+Input and Output:clear screen
+Input and Output:close
+Input and Output:color
+Input and Output:colour
+Input and Output:eof
+Input and Output:getscreen$()
+Input and Output:inkey$
+Input and Output:input
+Input and Output:line input
+Input and Output:open
+Input and Output:print
+Input and Output:putscreen
+Input and Output:reverse
+Input and Output:screen
+Input and Output:seek()
+Input and Output:tell
+Input and Output:using
+Graphical User Interface:Bitmaps
+Bitmaps:bitmap
+Bitmaps:bitmap color
+Bitmaps:bitmap get
+Bitmaps:bitmap image
+Bitmaps:bitmap remove
+Bitmaps:bitmap save
+Bitmaps:screenshot
+Graphical User Interface:Drawing
+Drawing:draw bitmap
+Drawing:draw circle
+Drawing:draw curve
+Drawing:draw dot
+Drawing:draw ellipse
+Drawing:draw flush
+Drawing:draw get
+Drawing:draw get$
+Drawing:draw image
+Drawing:draw line
+Drawing:draw rect
+Drawing:draw set
+Drawing:draw text
 Graphical User Interface:Input and Messages
-Input and Messages:shortcut
-Input and Messages:mouse set
+Input and Messages:ismousein()
+Input and Messages:keyboard message$()
+Input and Messages:message$
+Input and Messages:message send
 Input and Messages:mouse message$
 Input and Messages:mouse message$()
-Input and Messages:message send
-Input and Messages:message$
-Input and Messages:keyboard message$()
-Input and Messages:ismousein()
-Graphical User Interface:Drawing
-Drawing:draw text
-Drawing:draw set
-Drawing:draw rect
-Drawing:draw line
-Drawing:draw image
-Drawing:draw get$
-Drawing:draw get
-Drawing:draw flush
-Drawing:draw ellipse
-Drawing:draw dot
-Drawing:draw curve
-Drawing:draw circle
-Drawing:draw bitmap
-Graphical User Interface:Bitmaps
-Bitmaps:screenshot
-Bitmaps:bitmap save
-Bitmaps:bitmap remove
-Bitmaps:bitmap image
-Bitmaps:bitmap get
-Bitmaps:bitmap color
-Bitmaps:bitmap
-&Localization:translate$()
-&Localization:localize
-Sound:sound wait
-Sound:sound stop
-Sound:sound play
-Sound:bell
+Input and Messages:mouse set
+Input and Messages:shortcut
+Graphical User Interface:Menus
+Menus:menu
+Menus:menu set
+Menus:popupmenu
+Menus:submenu
+Menus:submenu set
+Graphical User Interface:Printing
+Printing:printer
+Printing:printer setup
+Graphical User Interface:Views
+Views:Boxview
+Boxview:boxview
+Boxview:boxview set
+Views:canvas
+Views:layout
+Views:Scrollbar
+Scrollbar:scrollbar
+Scrollbar:scrollbar get
+Scrollbar:scrollbar set
+Views:Splitview
+Splitview:splitview
+Splitview:splitview get
+Splitview:splitview set
+Views:Stackview
+Stackview:stackview
+Stackview:stackview get
+Stackview:stackview set
+Views:Tabview
+Tabview:tabview
+Tabview:tabview add
+Tabview:tabview get
+Tabview:tabview set
+Views:View 
+View :view
+View :view dropzone
+View :view get
+View :view remove
+Graphical User Interface:Widgets
+Widgets:Button
+Button:button 
+Button:button image
+Widgets:Calendar
+Calendar:calendar
+Calendar:calendar get$
+Calendar:calendar set
+Widgets:Checkbox
+Checkbox:checkbox
+Checkbox:checkbox image
+Checkbox:checkbox set
+Widgets:Colorcontrol
+Colorcontrol:colorcontrol
+Colorcontrol:colorcontrol get
+Colorcontrol:colorcontrol set
+Widgets:Columnbox
+Columnbox:columnbox
+Columnbox:columnbox add
+Columnbox:columnbox clear
+Columnbox:columnbox color
+Columnbox:columnbox column
+Columnbox:columnbox count
+Columnbox:columnbox get
+Columnbox:columnbox get$
+Columnbox:columnbox remove
+Columnbox:columnbox select
+Widgets:Dropbox
+Dropbox:dropbox
+Dropbox:dropbox add
+Dropbox:dropbox clear
+Dropbox:dropbox count
+Dropbox:dropbox get$
+Dropbox:dropbox remove
+Dropbox:dropbox select
+Widgets:Listbox
+Listbox:listbox
+Listbox:listbox add
+Listbox:listbox clear
+Listbox:listbox count
+Listbox:listbox get
+Listbox:listbox get$
+Listbox:listbox remove
+Listbox:listbox select
+Listbox:listbox sort
+Widgets:Options
+Options:option color
+Options:option set
+Widgets:Radiobutton
+Radiobutton:radiobutton 
+Radiobutton:radiobutton set
+Widgets:Slider
+Slider:slider
+Slider:slider color
+Slider:slider label
+Slider:slider get
+Slider:slider set
+Widgets:Spincontrol
+Spincontrol:spincontrol
+Spincontrol:spincontrol get
+Spincontrol:spincontrol set
+Widgets:Statusbar
+Statusbar:statusbar
+Statusbar:statusbar set
+Widgets:Text
+Text:text
+Text:text set
+Widgets:Textcontrol
+Textcontrol:textcontrol
+Textcontrol:textcontrol clear
+Textcontrol:textcontrol get$
+Textcontrol:textcontrol set
+Widgets:Textedit
+Textedit:textedit
+Textedit:textedit add
+Textedit:textedit clear
+Textedit:textedit color
+Textedit:textedit get
+Textedit:textedit get$
+Textedit:textedit set
+Widgets:TextURL
+TextURL:texturl
+TextURL:texturl color
+Widgets:Tooltip
+Tooltip:tooltip
+Tooltip:tooltip color
+Widgets:Treebox
+Treebox:treebox
+Treebox:treebox add
+Treebox:treebox clear
+Treebox:treebox collapse
+Treebox:treebox count
+Treebox:treebox expand
+Treebox:treebox get$
+Treebox:treebox remove
+Treebox:treebox select
+Treebox:treebox sort
+Graphical User Interface:Window 
+Window :alert
+Window :filepanel
+Window :window close
+Window :window count
+Window :window get
+Window :window open
+Window :window set
 Sound:beep
+Sound:bell
 Sound:Mediasound play
 Sound:Mediasound stop
-String Handling:val()
-String Handling:upper$()
-String Handling:trim$()
-String Handling:token()
-String Handling:str$()
-String Handling:split()
-String Handling:rtrim$()
-String Handling:right$()
-String Handling:mid$()
-String Handling:ltrim$()
-String Handling:lower$()
-String Handling:len()
-String Handling:left$()
-String Handling:instr()
-String Handling:hex$()
-String Handling:glob()
-String Handling:chr$()
+Sound:sound play
+Sound:sound stop
+Sound:sound wait
 String Handling:asc()
-Subroutines:sub
-Subroutines:static
-Subroutines:return
-Subroutines:numparams
-Subroutines:local
-Subroutines:import
-Subroutines:export
+String Handling:chr$()
+String Handling:glob()
+String Handling:hex$()
+String Handling:instr()
+String Handling:left$()
+String Handling:len()
+String Handling:lower$()
+String Handling:ltrim$()
+String Handling:mid$()
+String Handling:right$()
+String Handling:rtrim$()
+String Handling:split()
+String Handling:str$()
+String Handling:token()
+String Handling:trim$()
+String Handling:upper$()
+String Handling:val()
 Subroutines:end sub
+Subroutines:export
+Subroutines:import
+Subroutines:local
+Subroutines:numparams
+Subroutines:return
+Subroutines:static
+Subroutines:sub
 System::
-System:#
 System://
-System:wait
-System:to 
-System:time$
-System:thread remove
-System:thread get
-System:system()
-System:system$()
-System:sleep
-System:rem
-System:poke
-System:peek$
-System:peek
-System:pause
-System:iscomputeron
-System:exit
-System:execute()
-System:execute$()
-System:error
-System:docu$
-System:doc
-System:date$
-System:compile
+System:#
+System:Attributes
+System:bind()
 System:clipboard copy
 System:clipboard paste$
-System:bind()
-System:Attributes
+System:compile
+System:date$
+System:doc
+System:docu$
+System:error
+System:execute()
+System:execute$()
+System:exit
+System:iscomputeron
+System:pause
+System:peek
+System:peek$
+System:poke
+System:rem
+System:sleep
+System:system()
+System:system$()
+System:thread get
+System:thread remove
+System:time$
+System:to 
+System:wait
 Attributes:attribute clear
 Attributes:attribute get
 Attributes:attribute get$
 Attributes:attribute set
+&Localization:localize
+&Localization:translate$()
 & 
 & Information texts (info texts for short) are separated by
 & comment lines. The file must end with a comment line!
@@ -7332,7 +7332,7 @@ There are several options regarding the behaviour of the columns. These options 
 "resizable" -- the columns can be resized
 "popup" -- clicking on the columns with the right mouse button brings up a popup menu with all column names
 "removable" -- the columns can be removed
-
+"no-sorting" -- disable the sorting function
 An addtional options is "no-border" which draws the columnbox without a borderline.
 
 Several options can be combined, e.g. "movable, resizable, no-border". Note: If "removable" is allowed, you should allow "popup" too, so that removed columns can be brought back again.
