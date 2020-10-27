@@ -15,7 +15,7 @@ app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
 REM ---GFX DIR---
 gfxDir$=app_directory$+"/img/"
 
-user_settings$=trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
+user_settings$= "/Share/Projekte/c/yab" //trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
 home_directory$=trim$(system$("finddir B_USER_DIRECTORY"))
 documentation_directory$=trim$(system$("finddir B_SYSTEM_DOCUMENTATION_DIRECTORY"))+"/yab/"
 
@@ -198,19 +198,27 @@ if(settingsFullEditor) then
 endif
 
 dim msg$(1)
-dim pattern(8,8)
 
+dim pattern(8,8)
+dim part$(1)
 inloop = true
 while(inloop)
 	sleep 0.01
+
+
+	
 	n = split(message$, msg$(), "|")
+	
 	for i = 1 to n
+		//print msg$(1)
 		
 		if(DEBUG and msg$(i)<>"") then
 			//print msg$(i)
+			
 		endif
 		
 		switch(msg$(i))
+		
 			case "ToolbarNew"
 			case MyTranslate$("MainView:File:New...")
 				foundEmpty = 0
@@ -804,20 +812,20 @@ while(inloop)
 			case MyTranslate$("MainView:Help:Introduction to the IDE:english")
 				system("open http://old.besly.de/menu/search/archiv/dev/yab_ide_eng.html &")
 				break
-			case MyTranslate$("MainView:Help:yab Commands:german")
-				system("open "+globalHelpDir$+"yab-Commands-de &")
-				break
+			//case MyTranslate$("MainView:Help:yab Commands:german")
+			//	system("open "+globalHelpDir$+"yab-Commands-de &")
+			//	break
             case MyTranslate$("MainView:Help:yab Commands:english")
 			//print globalHelpDir$+"yabasic.html &"
-				system("open "+globalHelpDir$+"yab-Commands &")
+				system("open "+globalHelpDir$+"Backup/yab-Commands &")
 			break
 			case MyTranslate$("MainView:Help:Yabasic manual")
 				//print globalHelpDir$+"yabasic.html"
-				LAUNCH globalHelpDir$+"yabasic.html"
+				LAUNCH globalHelpDir$+"Backup/yabasic.html"
 			break 
-			case MyTranslate$("MainView:Help:Online resources:German BeUsergroup...")
-				system("open http://www.beusergroup.de &")
-			break 
+			//case MyTranslate$("MainView:Help:Online resources:German BeUsergroup...")
+			//	system("open http://www.beusergroup.de &")
+			//break 
 			case MyTranslate$("MainView:Help:Online resources:BeSly database...")
 				system("open http://www.besly.de &")
 			break 
@@ -896,9 +904,16 @@ while(inloop)
 				tmp$ = textcontrol get$ "ImmediateInput"
 				ImmediateExec(tmp$)
 				break
-
+			
 		end switch
-		
+		if (left$(msg$(i),17)="HelpTree:_Select:")then
+			entrynumber=val(mid$(msg$(i),18))
+			//print entrynumber
+			Item$ = TREEBOX GET$ "HelpTree", entrynumber
+			//print Item$ 
+			right_side(entrynumber)
+			
+		endif
 		// the output listbox, handle error messages
 		if((left$(msg$(i),22) = "YabOutputList:_Select:") or (left$(msg$(i),22) = "YabOutputList:_Invoke:")) then
 			tmp$ = listbox get$ "YabOutputList", val(right$(msg$(i),len(msg$(i))-22))
@@ -1061,29 +1076,34 @@ while(inloop)
 		endif
 
 		// help selected
-		if(left$(msg$(i),9) = "HelpTree:") then
+		//if(left$(msg$(i),9) = "HelpTree:") then
 			//tmp$ = right$(msg$(i), len(msg$(i))-17)
-			tmp=treebox get "HelpTree"
-			treebox select "HelpTree", tmp
-			tmp$ = treebox get$ "HelpTree", tmp
-			t$ = SyntaxGetInfoText$(ideDir$+"data/Help_En.dat", ideDir$+"data/Help_En_Index.dat", tmp$)
-			if(t$<>"") then
-				textedit clear "Text"+str$(MAXFILES+1)
-				textedit add "Text"+str$(MAXFILES+1), t$
-			endif
-		endif 
+			//tmp=treebox get "HelpTree"
+			//treebox select "HelpTree", tmp
+			//tmp$ = treebox get$ "HelpTree", tmp
+			//print tmp$
+		//	t$ = SyntaxGetInfoText$(ideDir$+"data/Help_En.dat", ideDir$+"data/Help_En_Index.dat", tmp$)
+			//print t$
+			
+		//	if(t$<>"") then
+				//textedit clear "Text"+str$(MAXFILES+1)
+				//textedit add "Text"+str$(MAXFILES+1), t$
+			//endif
+		//endif 
 
 		// search help
-		if(left$(msg$(i),9) = "HelpFind:") then
-			tmp$ = right$(msg$(i), len(msg$(i))-9)
-			tmp$ = trim$(tmp$)
-			tmp$ = lower$(tmp$)
-			t$ = SyntaxGetInfoText$(ideDir$+"data/Help_En.dat", ideDir$+"data/Help_En_Index.dat", tmp$)
-			if(t$<>"") then
-				textedit clear "Text"+str$(MAXFILES+1)
-				textedit add "Text"+str$(MAXFILES+1), t$
-			endif
-		endif
+	//	if(left$(msg$(i),9) = "HelpFind:") then
+			//tmp$ = right$(msg$(i), len(msg$(i))-9)
+			//tmp$ = trim$(tmp$)
+			//tmp$ = lower$(tmp$)
+			//t$ = SyntaxGetInfoText$(ideDir$+"data/Help_En.dat", ideDir$+"data/Help_En_Index.dat", tmp$)
+			
+			//if(t$<>"") then
+				//textedit clear "Text"+str$(MAXFILES+1)
+				//textedit add "Text"+str$(MAXFILES+1), t$
+			//endif
+		//endif
+		
 	next i
 
 	if(globalCurrentText>0 and not globalWasChanged and textedit get "Text"+str$(globalCurrentText), "hasChanged") then
@@ -1301,7 +1321,7 @@ sub OpenMainWindow()
 	menu "Help", "--", "", "MainView"
 	menu "Help", "Online resources", "", "MainView"
 	submenu "Help", "Online resources", "BeSly database...", "", "MainView"
-	submenu "Help", "Online resources", "German BeUsergroup...", "", "MainView"
+	//submenu "Help", "Online resources", "German BeUsergroup...", "", "MainView"
 	submenu "Help", "Online resources", "Team Maui...", "", "MainView"
 	submenu "Help", "Online resources", "Yab homepage...", "", "MainView"
 	submenu "Help", "Online resources", "Yab forum...", "", "MainView"
@@ -3904,6 +3924,108 @@ end sub
 
 // Load the syntax tree into the given tree box from the TreeFile$ file.
 sub SyntaxLoadTree(TreeFile$, TreeBoxID$)
+helpfile$="/Share/Projekte/c/yab/yab_documentation/data/Help_EN"
+x=0
+i=0
+	auslesen=open(helpfile$, "r")
+	while (not EOF(auslesen))
+		line input #auslesen b$
+		dim elements$(1)
+		b$=mid$(b$,1)
+		numElements = split(b$, elements$(),"|")
+		for i = 1 to numElements
+			x=x+1		
+			dim d$(x)
+			d$(x) = elements$(i)
+			//print d$(x)
+		next i
+	wend
+	close(auslesen)
+	name_baummenu$= TreeBoxID$
+	//"Text"+str$(MAXFILES+1)
+	
+	
+	 treebox clear TreeBoxID$
+	//TexteditHelp_x=VIEW GET "ViewBox","Width"
+	//TexteditHelp_y=VIEW GET "ViewBox","Height"
+	
+	//TEXTEDIT 10,10 TO TexteditHelp_x-10,TexteditHelp_y-25, "Information", 3, "ViewBox"
+	//TEXTEDIT SET "Text"+str$(MAXFILES+1), "wordwrap", true
+	//TEXTEDIT SET "Text"+str$(MAXFILES+1), "editable", false
+	//TEXTEDIT SET "Text"+str$(MAXFILES+1), "autoindent", false
+	//TEXTEDIT COLOR "Information", "color1, color2, color3, color4, char-color", Command$
+	//TEXTEDIT COLOR "Text"+str$(MAXFILES+1),"bgcolor",255,255,255 //(white)
+    //	TEXTEDIT COLOR "Text"+str$(MAXFILES+1)," textcolor", 0,0,0 //(black)
+     //	TEXTEDIT COLOR "Information","color1",0,0,255 //(blue)
+    // 	TEXTEDIT COLOR "Information","color2",255,0,0// (red)
+    // 	TEXTEDIT COLOR "Information","color3",0,175,0// (green)
+   // 	TEXTEDIT COLOR "Information","color4",185,185,185 //(gray)
+    //	TEXTEDIT COLOR "Information"," char-color",200,0,255// (magenta)
+   // 	farben()
+	//textedit color "Information", "color1", "Name:"
+	//textedit color "Information", "color1", "Synopsis:"
+	//textedit color "Information", "color1", "Description:"
+	//textedit color "Information", "color1", "Example:"
+	//textedit color "Information", "color1", "Design:"
+	//textedit color "Information", "color1", "Layout:"
+	//textedit color "Information", "color1", "Message:"
+	//textedit color "Information", "color1", "Related:"
+ 	anzahlspalten=numElements
+	anzahlzeilen=x/anzahlspalten
+	eintraege=anzahlspalten*anzahlzeilen
+	for treezeilen=1 to anzahlzeilen*anzahlspalten step anzahlspalten
+	//print len(d$(treezeilen+4))
+	if (d$(treezeilen+1)="") then
+		treebox add name_baummenu$, d$(treezeilen)			
+	elseif (d$(treezeilen+2)="") then
+		if(instr(d$(treezeilen+1),"_")) then
+			entry_tree$=mid$(d$(treezeilen+1),2)
+		else
+			entry_tree$=d$(treezeilen+1)
+		endif
+		treebox add name_baummenu$, d$(treezeilen), entry_tree$,false	
+	elseif (d$(treezeilen+3)="") then
+		if(instr(d$(treezeilen+2),"_")) then
+			entry_tree$=mid$(d$(treezeilen+2),2)
+		else
+			entry_tree$=d$(treezeilen+2)
+		endif
+		treebox add name_baummenu$, d$(treezeilen+1), entry_tree$,false
+	elseif (d$(treezeilen+4)="") then
+		if(instr(d$(treezeilen+3),"_")) then
+			entry_tree$=mid$(d$(treezeilen+3),2)
+		else
+			entry_tree$=d$(treezeilen+3)
+		endif
+		treebox add name_baummenu$, d$(treezeilen+2), entry_tree$,false		
+	elseif (len(d$(treezeilen+4))>0) then
+		if(instr(d$(treezeilen+4),"_")) then
+			entry_tree$=mid$(d$(treezeilen+4),2)
+		else
+			entry_tree$=d$(treezeilen+4)
+		endif
+		treebox add name_baummenu$, d$(treezeilen+3),entry_tree$,false
+	//elseif (len(d$(treezeilen+5))>0) then
+	//	treebox add name_baummenu$, d$(treezeilen+4), mid$(d$(treezeilen+5),2),false						
+	endif
+	
+	next treezeilen
+end sub
+sub right_side(entrynumber)
+	TEXTEDIT CLEAR "Text"+str$(MAXFILES+1)
+	box_header$ = TREEBOX GET$ "HelpTree", entrynumber
+	
+	fileload$=d$(entrynumber*6)
+	handleA=open(fileload$, "r")
+	while (not EOF(handleA))
+		line input #handleA information$
+		information$=information$+"\n"
+		TEXTEDIT ADD "Text"+str$(MAXFILES+1),information$
+		//boxview SET "ViewBox", "Label", box_header$
+	wend
+	close(auslesen)
+end sub
+sub SyntaxLoadTree1(TreeFile$, TreeBoxID$)
 	//TreeFile$="/Share/Projekte/c/yab/yab_ide/data/Help_En.dat"
 	local info, level, handle, inloop
 	local tmp$
@@ -3974,6 +4096,7 @@ sub SyntaxGetInfoText$(TreeFile$, IndexFile$, Command$)
 	handle = open (TreeFile$, "r")
 	if(not handle) return ""
 		seek handle, position, "begin"
+		print position
 		tmp$ = GetLine$(handle)
 		inloop = true
 		while(not eof(handle) and inloop)
@@ -4449,7 +4572,7 @@ sub getprojectdir$()
 end sub
 sub check_docu()
 
-if (IfExists(documentation_directory$+"/yab-Commands")) then
+if (IfExists(documentation_directory$+"/Backup/yab-Commands")) then
 	//option set "ToolbarBuild", "Enabled", 1
 	MENU SET "Help","yab Commands","Enable","MainView"
 else
@@ -4457,7 +4580,7 @@ else
 	//option set "ToolbarBuild", "Enabled", 0
 	MENU SET "Help","yab Commands","Disable","MainView"
 endif
-if (IfExists(documentation_directory$+"/yabasic.html")) then
+if (IfExists(documentation_directory$+"/Backup/yabasic.html")) then
 	//option set "ToolbarBuild", "Enabled", 1
 	MENU SET "Help","Yabasic manual","Enable","MainView"
 else
