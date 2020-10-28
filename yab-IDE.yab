@@ -15,7 +15,7 @@ app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
 REM ---GFX DIR---
 gfxDir$=app_directory$+"/img/"
 
-user_settings$= "/Share/Projekte/c/yab" //trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
+user_settings$= trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
 home_directory$=trim$(system$("finddir B_USER_DIRECTORY"))
 documentation_directory$=trim$(system$("finddir B_SYSTEM_DOCUMENTATION_DIRECTORY"))+"/yab/"
 
