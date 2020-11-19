@@ -19,17 +19,24 @@ user_settings$= trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
 home_directory$=trim$(system$("finddir B_USER_DIRECTORY"))
 documentation_directory$=trim$(system$("finddir B_SYSTEM_DOCUMENTATION_DIRECTORY"))+"/yab/"
 
+
 if (IfExists(documentation_directory$)=0) then	
 else
 	globalHelpDir$ = documentation_directory$
 endif
+TreeFile$=documentation_directory$+"data/Help_EN"
+//print TreeFile$
 
 
 find_ideDir$=user_settings$+"/yab-ide/" //+"/apps/yab/" //settingsYabbDir$ + "yab-IDE/"
-	
+//print IfExists(find_ideDir$+"/yab-ide/data")	
 if (IfExists(find_ideDir$+"/yab-ide/data")=0) then
 	output$=system$("mkdir -p "+find_ideDir$+"data")
+	output$=system$("cp "+user_settings$+"/yab-ide/ide-openfiles " +user_settings$+"/yab-ide/ide-openfiles_backup")
+	output$=system$("rm "+user_settings$+"/yab-ide/ide-openfiles")
 	output$=system$("cp -ur "+app_directory$+"data "+ user_settings$+"/yab-ide")
+	output$=system$("cp "+user_settings$+"/yab-ide/ide-openfiles_backup " +user_settings$+"/yab-ide/ide-openfiles")
+	output$=system$("rm "+user_settings$+"/yab-ide/ide-openfiles_backup")
 endif
 if (IfExists(find_ideDir$+"/yab-ide/Language")=0) then
 	output$=system$("mkdir -p "+find_ideDir$+"Language")
@@ -1505,7 +1512,7 @@ sub OpenMainWindow()
 	textedit color "Text"+str$(MAXFILES+1), "color1", "Layout:"
 	textedit color "Text"+str$(MAXFILES+1), "color1", "Message:"
 	textedit color "Text"+str$(MAXFILES+1), "color1", "Related:"
-	SyntaxLoadTree(ideDir$+"data/Help_En.dat", "HelpTree") 
+	SyntaxLoadTree(TreeFile$, "HelpTree") 
 	//Treebox sort "HelpTree"
 	// UpdateLines(0, globalHSplitDivider-1-peek("scrollbarwidth"), 1, 15)
 	UpdateLines(0, 1200, 1, globalRealFontSize) //change to settingsFontSize
@@ -3924,7 +3931,8 @@ end sub
 
 // Load the syntax tree into the given tree box from the TreeFile$ file.
 sub SyntaxLoadTree(TreeFile$, TreeBoxID$)
-helpfile$="/Share/Projekte/c/yab/yab_documentation/data/Help_EN"
+//helpfile$="/Share/Projekte/c/yab/yab_documentation/data/Help_EN"
+helpfile$=TreeFile$
 x=0
 i=0
 	auslesen=open(helpfile$, "r")
@@ -3986,12 +3994,7 @@ i=0
 		treebox add name_baummenu$, d$(treezeilen), entry_tree$,false	
 	elseif (d$(treezeilen+3)="") then
 		if(instr(d$(treezeilen+2),"_")) then
-			if (mid$(d$(treezeilen+2),2)="chr$(47)chr$(47)")then
-				entry_tree$="//"
-			//print mid$(d$(treezeilen+2),2)
-			else
-				entry_tree$=mid$(d$(treezeilen+2),2)
-			endif
+			entry_tree$=mid$(d$(treezeilen+2),2)
 		else
 			entry_tree$=d$(treezeilen+2)
 		endif
