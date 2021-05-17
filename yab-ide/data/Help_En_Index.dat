@@ -1,0 +1,668 @@
+&Arithmetic
+7560
+&
+7562
+abs()
+7568
+acos()
+7935
+and()
+8434
+asin()
+9224
+atan()
+9733
+bin$()
+10632
+cos()
+11238
+dec()
+11503
+eor()
+12022
+euler
+12799
+exp()
+13205
+frac()
+13827
+int()
+14508
+log()
+14908
+max()
+15567
+min()
+16359
+mod()
+16774
+or()
+17574
+pi
+18367
+ran()
+18823
+sig()
+19753
+sin()
+20483
+sqr()
+21008
+sqrt()
+21379
+tan()
+21731
+xor()
+22094
+** or ^
+23127
+&
+23944
+and
+23948
+break
+24398
+case
+25093
+continue
+25590
+default
+26259
+do
+27379
+else
+27923
+elsif
+28462
+end
+29932
+endif
+30624
+false
+31270
+fi
+31837
+for
+32151
+gosub
+33113
+goto
+33983
+if
+34919
+label
+36705
+loop
+37694
+next
+38181
+not
+38740
+on gosub
+39392
+on goto
+40727
+on interrupt
+42151
+logical or
+43437
+pause
+43840
+repeat
+45068
+return
+45841
+sleep
+47540
+step
+47915
+switch
+48455
+then
+49771
+true
+50579
+until
+51015
+wait
+51622
+wend
+51996
+while
+52494
+:
+53150
+&
+53787
+arraydim()
+53798
+arraysize()
+54688
+data
+57261
+dim
+58213
+read
+59730
+redim
+60459
+restore
+60898
+&
+61967
+asc()
+61973
+chr$()
+62796
+glob()
+63658
+hex$()
+64794
+instr()
+65284
+left$()
+66298
+len()
+67599
+lower$()
+67973
+ltrim$()
+68381
+rtrim$()
+69033
+mid$()
+69681
+right$()
+70949
+split()
+72268
+str$()
+75403
+token()
+80486
+trim$()
+83412
+upper$()
+84025
+val()
+84673
+&
+85387
+at()
+85392
+clear screen
+86765
+close
+87563
+color
+88101
+colour
+89299
+eof
+89531
+getscreen$()
+90122
+inkey$
+91354
+input
+92657
+line input
+94201
+open
+95043
+print
+98170
+putscreen
+101575
+reverse
+102554
+screen
+103417
+seek()
+103732
+tell
+105294
+using
+105955
+#
+106996
+at()
+108369
+;
+109732
+&
+110378
+end sub
+110386
+export
+110818
+import
+113069
+local
+114629
+numparams
+116089
+return
+117540
+static
+119242
+sub
+120240
+&Attributes
+122529
+&
+122531
+attribute clear
+122547
+attribute get
+122786
+attribute get$
+123517
+attribute set
+125175
+bind()
+125761
+clipboard copy
+126533
+clipboard paste$
+127235
+compile
+127857
+date$
+128413
+doc
+130138
+docu$
+131293
+error
+132115
+execute$()
+132806
+execute()
+133872
+exit
+134277
+iscomputeron
+134671
+pause
+135059
+peek
+136286
+peek$
+141839
+poke
+145456
+rem
+146694
+sleep
+147808
+system$()
+148167
+system()
+148756
+thread get
+149379
+thread remove
+150728
+time$
+151651
+to 
+152820
+//
+153374
+:
+153878
+&Bitmaps
+154511
+&
+154513
+bitmap
+154520
+bitmap color
+154879
+bitmap get
+155231
+bitmap image
+158356
+bitmap remove
+158643
+bitmap save
+158871
+screenshot
+159268
+
+159514
+
+159524
+draw bitmap
+159538
+draw circle
+160404
+draw curve
+161063
+draw dot
+162048
+draw ellipse
+162629
+draw flush
+163368
+draw get
+164498
+draw get$
+166444
+draw image
+167857
+draw line
+169763
+draw rect
+170335
+draw set
+170991
+draw text
+174360
+&
+175530
+ismousein()
+175542
+keyboard message$()
+176268
+message$
+178157
+message send
+180490
+mouse message$()
+181540
+mouse message$
+183572
+mouse set
+184148
+shortcut
+184658
+&Printing
+187177
+&
+187179
+printer
+187187
+printer setup
+189560
+&
+190584
+menu
+190589
+menu set
+194004
+popupmenu
+196045
+submenu
+197693
+submenu set
+201998
+&Boxview
+203755
+&
+203757
+boxview
+203765
+boxview set
+205190
+canvas
+205421
+layout
+205859
+&
+207081
+scrollbar
+207091
+scrollbar get
+207311
+scrollbar set
+207590
+&
+209022
+splitview
+209032
+splitview get
+209970
+splitview set
+210200
+&
+210733
+stackview
+210743
+stackview get
+212857
+stackview set
+213148
+&
+213605
+tabview
+213613
+tabview add
+213915
+tabview get
+214812
+tabview set
+215011
+&
+215195
+view
+215200
+view dropzone
+215344
+view get
+215629
+view remove
+215904
+&
+216395
+button
+216402
+button image
+217717
+calendar
+219458
+calendar get$
+221125
+calendar set
+221618
+checkbox
+222043
+checkbox image
+223300
+checkbox set
+225527
+colorcontrol
+225826
+colorcontrol get
+227848
+colorcontrol set
+228456
+columnbox
+228792
+columnbox add
+234002
+columnbox clear
+235183
+columnbox color
+235551
+columnbox column
+236596
+columnbox count
+237755
+columnbox get
+238193
+columnbox get$
+238728
+columnbox remove
+239271
+columnbox select
+239628
+&
+240084
+dropbox
+240092
+dropbox add
+241297
+dropbox clear
+241571
+dropbox count
+241822
+dropbox get$
+242072
+dropbox remove
+242366
+dropbox select
+242925
+listbox
+243204
+listbox add
+246169
+listbox clear
+246647
+listbox count
+246942
+listbox get
+247338
+listbox get$
+247825
+listbox remove
+248243
+listbox select
+248582
+listbox sort
+249227
+&
+249936
+option color
+249949
+option set
+250159
+radiobutton
+251051
+radiobutton set
+252785
+&
+253189
+slider
+253196
+slider color
+253917
+slider get
+254340
+slider label
+254567
+slider set
+254818
+spincontrol
+255430
+spincontrol get
+255727
+spincontrol set
+255957
+statusbar
+256177
+statusbar set
+257646
+text
+258144
+text set
+259332
+&
+260454
+textcontrol
+260466
+textcontrol clear
+260991
+textcontrol get$
+261229
+textcontrol set
+261521
+textedit
+262579
+textedit add
+263242
+textedit clear
+263567
+textedit color
+263909
+textedit get
+264890
+textedit get$
+266582
+textedit set
+267021
+&
+270559
+texturl
+270567
+texturl color
+271175
+tooltip
+271555
+tooltip color
+273235
+&
+274518
+treebox
+274526
+treebox add
+274889
+treebox clear
+275414
+treebox collapse
+275677
+treebox count
+275975
+treebox expand
+276283
+treebox get$
+276566
+treebox remove
+276893
+treebox select
+277378
+treebox sort
+277681
+&
+277975
+localize
+277984
+translate$()
+281216
+&Sound
+281969
+&
+281971
+beep
+281976
+bell
+282210
+sound play
+282573
+sound stop
+283498
+sound wait
+283872
+&Window
+284278
+&
+284280
+alert
+284286
+filepanel
+286064
+window open
+289354
+window close
+292069
+window count
+292561
+window get
+293188
+window set
+295022
+Mediasound play
+299603
+Mediasound stop
+300175

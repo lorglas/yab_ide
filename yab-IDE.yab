@@ -3,12 +3,12 @@
 doc Author: Jan Bungeroth
 doc Thanks to: Genki, Lelldorin, lorglas, Stargater, DasJott, bbjimmy
 doc (c) 2006-2018 in terms of the Artistic License
-doc (c) 2020 Lorenz Glaser (lorglas) in terms of the Artistic License
+doc (c) 2020-2021 Lorenz Glaser (lorglas) in terms of the Artistic License
 doc
 doc The yab-IDE provides you with an integrated development suite for yab
 doc Enjoy.
 
-versionnumber$="2.3.2"
+versionnumber$="2.3.3"
 
 //Search Directories
 app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
@@ -18,6 +18,7 @@ gfxDir$=app_directory$+"/img/"
 user_settings$= trim$(system$("finddir B_USER_SETTINGS_DIRECTORY"))
 home_directory$=trim$(system$("finddir B_USER_DIRECTORY"))
 documentation_directory$=trim$(system$("finddir B_SYSTEM_DOCUMENTATION_DIRECTORY"))+"/yab/"
+catalogPath$="/boot/system/data/locale/catalogs/x-vnd.yab-IDE" //changed to new Catalog 05012021
 
 
 if (IfExists(documentation_directory$)=0) then	
@@ -106,7 +107,7 @@ if(LoadSettings() = 1) then
 	buildDir$ = home_directory$+"/yab_work/BuildFactory/" //directory of the build-factory 
 	globalHelpDir$ = documentation_directory$
 	settingsLangUse = true
-	settingsLangPath$ = find_ideDir$+"Language/Dictionaries/x-vnd.yab-IDE" //"Language/Dictionaries/yab-IDE" 
+	settingsLangPath$ = catalogPath$ //find_ideDir$+"Language/Dictionaries/x-vnd.yab-IDE" //"Language/Dictionaries/yab-IDE" 
 	settingsAutoIndent = true
 	settingsAutoCompletion = true
 	settingsACNumChar = 2
@@ -174,11 +175,13 @@ globalRealOS$ = left$(globalRealOS$, 4)
 
 oldSpinner = 1
 
-#if(settingsLangUse) then
-	//print settingsLangPath$
-#	localize settingsLangPath$
-#	localize Mimetype$
-#endif
+if(settingsLangUse) then
+	localize "x-vnd.yab-IDE"
+	//localize settingsLangPath$
+	mime$ = "x-vnd."
+	
+	
+endif
 
 
 OpenMainWindow()
@@ -257,7 +260,7 @@ while(inloop)
 				if(not foundEmpty) then
 					alert MyTranslate$("Sorry, you can not open more than ")+str$(MAXFILES)+MyTranslate$(" files at once!\n\nPlease close one or more other files first."), "Ok", "Warning"
 				else
-					tmp$ = filepanel "Load-File", "Open", globalProjectDir$
+					tmp$ = filepanel "Load-File", "Open", globalProjectDir$,""
 					if(tmp$<>"") then
 						foundProject = false
 						for j = 1 to MAXFILES
@@ -418,19 +421,23 @@ while(inloop)
 				BackupSource()
 				break
 			case MyTranslate$("MainView:File:Page setup...")
-				printer setup globalConfigDir$+"printersetup"
+				new_settings_dir$="/boot/home/config/settings/yab-ide/"
+				printer setup new_settings_dir$+"printersetup"
+				//printer setup globalConfigDir$+"printersetup"
 				break
 			case MyTranslate$("MainView:File:Print...")
 				if(globalCurrentText>0) then
-					new_settings_dir$="/boot/home/config/settings/printers/"
-					err = printer globalAllNames$(globalCurrentText), new_settings_dir$+"printersetup", "Text"+str$(globalCurrentText) //globalConfigDir$+
+					new_settings_dir$="/boot/home/config/settings/yab-ide/"
+					//err = printer globalAllNames$(globalCurrentText), globalConfigDir$+"printersetup", "Text"+str$(globalCurrentText) //globalConfigDir$+
+					print globalAllNames$(globalCurrentText)+" "+ new_settings_dir$+"printersetup  Text"+str$(globalCurrentText)
+					err = printer "yab-ide", new_settings_dir$+"printersetup", "Text"+str$(globalCurrentText) //globalConfigDir$+
 					print err
-					if(err = 4) then
-						printer setup "/tmp/printersetup"
-						err = printer globalAllNames$(globalCurrentText), "/tmp/printersetup", "Text"+str$(globalCurrentText)
-						system("rm -f /tmp/printersetup >/dev/null")
-					endif
-					if(err>1 and err<5) then
+					//if(err = 4) then
+					//	printer setup "/tmp/printersetup"
+					//	err = printer globalAllNames$(globalCurrentText), "/tmp/printersetup", "Text"+str$(globalCurrentText)
+					//	system("rm -f /tmp/printersetup >/dev/null")
+					//endif
+					if(err>=1 and err<=5) then
 						alert MyTranslate$("Error while printing!"), "Ok", "warning"
 					endif
 				endif
@@ -1367,7 +1374,7 @@ sub OpenMainWindow()
 	ToolbarAddIcon("ToolbarHelp", "yab Help", "helpp.png", "helpn.png", "helpd.png")
 	ToolbarAddSeparator()
 
-	spincontrol 435,3, "ToolbarGotoLine", "Go to Line:", 1, 100000, 1, "Toolbar"
+	spincontrol 415,3, "ToolbarGotoLine", "Go to Line:", 1, 100000, 1, "Toolbar"
 	tooltip "ToolbarGotoLine", "Go to Line"
 	draw set "highcolor", 185,185,185, "Toolbar"
 	draw line 459,5 to 459,25, "Toolbar"
@@ -2885,16 +2892,17 @@ sub OptionWindow()
 	button 320,297 to 470,317, "OptDefault", "Factory Settings", "OptBox6"
 	
 	// Language
-	boxview 0,0 to 490, 340, "OptBox8", "Language", 2, "OptStack4"
-	checkbox 10,10, "OptLangCheck", "Use automatic localization", restartSettingsLangUse, "OptBox8"
+	boxview 0,0 to 490, 340, "OptBox8", MyTranslate$("Language"), 2, "OptStack4"
+	checkbox 10,10, "OptLangCheck", MyTranslate$("Use automatic localization"), restartSettingsLangUse, "OptBox8"
 	MyLine(10,40,470,40,"OptBox8")
 	columnbox 10,55 to 470,275, "OptLangList", false, "", "OptBox8"
 	columnbox column "OptLangList", "Supported Languages", 1, 460,460,460, "align-left"
 	MyLine(10,290,470,290,"OptBox8")
-	button 320,297 to 470,317, "OptDefault", "Factory Settings", "OptBox8"
+	button 320,297 to 470,317, "OptDefault", MyTranslate$("Factory Settings"), "OptBox8"
 	columnbox color "OptLangList", "Selection-Active", 220,220,250 
 	columnbox color "OptLangList", "Row-Divider", 255,255,255 
-	tmp$ = system$("ls "+settingsLangPath$+"/*.catalog")
+	
+	tmp$ = system$("ls "+settingsLangPath$+"/*.catalog") //
 	n = token(tmp$, msg$(), "\n")
 	for i = 1 to n
 		columnbox add "OptLangList", 1,i,18,msg$(i)
@@ -2902,26 +2910,27 @@ sub OptionWindow()
 	
 	//Backup 
 	
-	boxview 5,0 to 490, 340, "OptBox10", "Backup", 2, "OptStack5"
+	boxview 5,0 to 490, 340, "OptBox10", MyTranslate$("Backup"), 2, "OptStack5"
 	SPINCONTROL 10,10, "OptBackupSpin", MyTranslate$("How many clicks on - Save - do a Backup")+"?", 0, 10, 1, "OptBox10"
 	SPINCONTROL SET "OptBackupSpin", settingsBackupTime
 	
 	//HTML Export
-	boxview 5,0 to 490, 340, "OptBox12", "Export", 2, "OptStack6"
-	draw text 10,15, "META Settings", "OptBox12"
+	boxview 5,0 to 490, 340, "OptBox12", MyTranslate$("Export"), 2, "OptStack6"
+	draw text 10,15, MyTranslate$("META Settings"), "OptBox12"
 	MyLine(10,30,490-20,30,"OptBox12")
-	draw text 10,68 ,"Title:", "OptBox12"
-	draw text 10,98 ,"Author:", "OptBox12"
-	draw text 10,128 ,"Description:", "OptBox12"
-	draw text 10,158 ,"Keywords:", "OptBox12"
-	TEXTCONTROL 90,50 TO 450,60, "META_Title", "", META_Title$, "OptBox12"
-	TEXTCONTROL 90,80 TO 450,90, "META_Author", "", META_Author$, "OptBox12"
-	TEXTCONTROL 90,110 TO 450,120, "META_Description", "", META_Description$, "OptBox12"
-	TEXTCONTROL 90,140 TO 450,150, "META_Keywords", "", META_Keywords$, "OptBox12"
+	localize
+	draw text 10,68 ,translate$("Title:"), "OptBox12"
+	draw text 10,98 ,translate$("Author:"), "OptBox12"
+	draw text 10,128 ,translate$("Description:"), "OptBox12"
+	draw text 10,158 ,translate$("Keywords:"), "OptBox12"
+	TEXTCONTROL 120,50 TO 450,60, "META_Title", "", META_Title$, "OptBox12"
+	TEXTCONTROL 120,80 TO 450,90, "META_Author", "", META_Author$, "OptBox12"
+	TEXTCONTROL 120,110 TO 450,120, "META_Description", "", META_Description$, "OptBox12"
+	TEXTCONTROL 120,140 TO 450,150, "META_Keywords", "", META_Keywords$, "OptBox12"
 	MyLine(10,180,470-20,180,"OptBox12")
 	checkbox 10,200, "settingsNo-Robots", "don't allow searchengines to add your site into there database", META_Robots, "OptBox12"
 	MyLine(10,290,470-20,290,"OptBox12")
-	button 320,297 to 470,317, "HTMLSettings_Save", "Take over", "OptBox12"
+	button 320,297 to 470,317, "HTMLSettings_Save", MyTranslate$("Take over"), "OptBox12"
 	
 	boxview 5,0 to 490, 340, "OptBox13", "Reminder for installed buildfactory", 2, "OptStack7"
 	if (buildfactory=2) then
@@ -2932,7 +2941,7 @@ sub OptionWindow()
 	checkbox 10,20, "OptReminder", "Yes / No", buildfactory_check, "OptBox13"
 
 	window set "OptWindow", "moveto", x,y
-dim part$()
+	dim part$(1)
 	inloop = true
 	while(inloop)
 		n = split(message$, msg$(), "|")		
@@ -3266,6 +3275,7 @@ end sub
 sub MyTranslate$(txt$)
 	if(settingsLangUse) return menu translate$(txt$)
 	return txt$
+	
 end sub
 
 // returns true if filename$ exists
@@ -4273,7 +4283,7 @@ sub LoadSettings()
 		globalTextFinder(j) = 0
 	next j
 
-	if(i = 43) return 0
+	if(i = 51) return 0
 	return 1
 end sub
 

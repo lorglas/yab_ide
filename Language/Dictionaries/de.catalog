@@ -1,0 +1,209 @@
+1	de	x-vnd.yab-IDE	759197705
+File			Datei
+New...			Neu...
+Open...			Öffnen...
+Close			Schließen
+Save			Speichern
+Save as...			Speichern als...
+Save as template...			Als Vorlage speichern...
+Page setup...			Seiteneinrichtung...
+Print...			Drucken...
+Quit			Beenden
+Edit			Bearbeiten
+Undo			Rückgängig
+Cut			Ausschneiden
+Copy			Kopieren
+Paste			Einfügen
+Select all			Alles auswählen
+Find			Suchen
+Find again			Weitersuchen
+Find and replace			Suchen und ersetzen
+Program			Programm
+Run			Ausführen
+Run in Terminal			Im Terminal ausführen
+Set run parameters...			Parameter setzen...
+Build-Factory...			Build-Factory...
+Tools			Werkzeuge
+Pattern editor...			Muster erstellen...
+Color selection...			Farbe auswählen...
+ASCII table...			ASCII Tabelle...
+View			Ansicht
+Next file			Nächste Datei
+Previous file			Vorherige Datei
+Full screen			Vollbild
+Maximize editor			Editor maximieren
+Auto indent			Automatisch einrücken
+Auto completion			Automatisch ergänzen
+Refresh colors			Farben wiederherstellen
+Reformat sourcecode			Quelltext formatieren
+Undo reformat			Formatierung zurücksetzen
+Options...			Einstellungen...
+Introduction to the IDE...			Einführung zur IDE...
+yab Help...			yab Hilfe...
+Yabasic Manual...			Yabasic Handbuch...
+Online Resources			Webseiten online
+yab Homepage...			yab Homepage...
+yab Forums...			yab Foren...
+Yabasic Homepage...			Yabasic Homepage...
+Team Maui...			Team Maui...
+About...			Über yab-IDE...
+New			Neu
+Open			Öffnen
+Build Factory...			Build Maschine
+Pattern Editor			Muster erstellen
+Options			Einstellungen
+yab Help			yab Hilfe
+Go to Line:			Gehe zu Zeile:
+Files			Dateien
+Help			Hilfe 
+Filename			Dateiname
+Command			Befehl
+yab Output			yab Ausgabe
+Immediate			Sofort ausführen
+Execute			Ausführen
+Find:			Suche:
+Replace:			Ersetze:
+Case Sensitive			Groß-/Kleinschreibung beachten
+Replace All			Alles ersetzen
+Suspecting user input, therefore starting in a terminal.			Eine Benutzereingabe wird erwartet, Programm startet deshalb im Terminal.
+Ok			Ok
+File: 			Datei: 
+(not saved)			(nicht gespeichert)
+Line			Zeile
+Please wait...			Bitte warten...
+Loading Program			Lade Programm
+Running			Ausführung
+Running Program			Ausführung
+Error! Program could not be killed.			Fehler! Programm konnte nicht beendet werden.
+Oops			Oops
+Close terminal to break program			Terminal schließen um Programm zu beenden
+yab-IDE Set Run Parameters			yab-IDE Parameter setzen
+Set Run Parameters			Parameter setzen
+yab Parameters:			yab Parameter:
+Program Parameters:			Programm Parameter:
+yab-IDE New Program			yab-IDE Neues Programm
+New yab Program			Neues yab Programm
+Please select one of the available templates for your program:			Bitte eine der verfügbaren Vorlagen auswählen:
+Name:			Name:
+Browse...			Wählen...
+Advanced Options			Weitere Optionen
+Remove Template			Vorlage löschen
+Project Directory			Projektverzeichnis
+Could not open template: 			Vorlage konnte nicht geladen werden: 
+Opening an empty file instead.			Öffne eine leere Datei stattdessen.
+Really delete template			Vorlage wirklich löschen
+Yes			Ja
+Cancel			Abbrechen
+This standard template can not be deleted!			Diese Standardvorlage kann nicht gelöscht werden!
+Template successfully removed.			Vorlage erfolgreich gelöscht.
+Error while deleting template!			Fehler beim Löschen der Vorlage!
+Empty			Leere Datei
+Basic Template			Einfache Vorlage
+Editor Template			Vorlage für einen Editor
+Command Line Template			Kommandozeilenvorlage
+Bind...			Binden...
+Create an empty file.			Erstelle eine leere Datei.
+Create a new program with a bare window.			Erstelle ein neues Programm mit einem leeren Fenster.
+Create a new program with menus and an editor.			Erstelle ein neues Programm mit Menüs und einem Editor.
+Build-Factory			Build-Maschine
+Create a new command line program.			Erstelle ein neues Kommandozeilenprogramm.
+yab-IDE Save As Template			yab-IDE Als Vorlage speichern
+Save As Template			Als Vorlage speichern
+Save your code as a template for other programs:			Quellcode als Vorlage speichern
+Template Name			Vorlagenname
+Description (not more than 30 characters per line)			Beschreibung (nicht mehr als 30 Zeichen pro Zeile)
+Drop image here			Bilddatei hierher ziehen
+Could not load image!			Bilddatei konnte nicht geladen werden
+Error while saving template!			Fehler beim Speichern der Vorlage!
+File could not be saved!			Datei konnte nicht gespeichert werden!
+Sorry, you can not open more than files at once!\n\nPlease close one or more other files first.			Achtung, es können nicht mehr als  Dateien auf einmal geöffnet werden!\n\nBitte zunächst eine oder mehrere andere Dateien schließen.
+File is already open.			Datei ist bereits geöffnet.
+Error while loading file:\n\n			Fehler beim Laden der Datei:\n\n
+File \"			Datei \"
+\" not saved!\n\nSave the file now?			\" ist nicht gespeichert\n\nDatei jetzt speichern?
+Error while printing!			Fehler beim Drucken!
+Some files are not saved!\n\nDo you really want to quit?			Es gibt nicht gesicherte Dateien!\n\nSoll yab-IDE dennoch beendet werden?
+Program is not saved.\n\nSave it now?			Programm ist nicht gesichert.\n\nJetzt speichern?
+Save Always			Immer speichern
+Save Now			Jetzt speichern
+Reformating did not close all open loops and conditions.\nReformating currently does not support loops and conditions opened and closed by a colon (:).\nE.g. while(loop):wend\n\nYou can undo the reformating before doing any further changes.			Das Formatieren hat nicht alle Schleifen und Konditionen schließen können.\nDas Formatieren unterstützt momentan keine Verschachtelungen mit Doppelpunkten (:).\nZ.B.. while(loop):wend\n\nDas Formatieren kann rückgängig gemacht werden, solange der Text nicht geändert wird.
+Do not show this warning again			Diese Warnung nicht mehr zeigen
+Changes made since reformating will be lost!			Änderungen seit dem letzten Formatieren gehen verloren!
+The operation \"Replace All\" can not be reverted!\n\nDo you want to continue?			\"Alles ersetzen\" kann nicht rückgängig gemacht werden\n\nDennoch fortfahren?
+yab-IDE Build Factory			yab-IDE Build-Factory
+Target file name:			Zieldatei:
+Use the Haiku tab view instead of the ZETA native tab view			Verwende Haiku-Tabviews anstatt ZETA-eigenen Tabviews
+Create Binary			Kompiliere Zieldatei
+The compiler GCC was not found!\n\nPlease install the development tools from your ZETA CD.			Der GCC-Compiler wurde nicht gefunden!\n\nBitte die Entwicklungsprogramme von der ZETA CD nachinstallieren.
+The compiler GCC was not found!\n\nPlease install the development tools.			Der GCC-Compiler wurde nicht gefunden!\n\nBitte die Entwicklungsprogramme nachinstallieren.
+Visit Download Site			GCC jetzt herunterladen
+Warning: Although you are using the BeOS yab, the resulting binary will be ZETA only!			Achtung: Obwohl gerade BeOS yab verwendet wird, wird die Zieldatei nur auf ZETA laufen!
+Build Factory Output\n\n			Build-Factory Ausgabe\n\n
+Please wait, processing... (this may take a while)\n\n			Bitte warten... (die Bearbeitung kann einige Zeit dauern)\n\n
+Build was successful			Die Erstellung war erfolgreich
+Build failed!			Die Erstellung ist fehlgeschlagen!
+yab-IDE Pattern Editor			yab-IDE Muster erstellen
+Insert Pattern			Muster einfügen
+yab-IDE Color Selection			yab-IDE Farbauswahl
+Color Selection			Farbauswahl
+Default Colors:			Standardfarben:
+Black			Schwarz
+Backup			Sicherung
+Export as HTML...			Exportieren als HTML
+Open project folder...			Öffne Projektverzeichnis
+Open Backup Folder			Öffne Sicherungsverzeichnis
+Settings			Einstellungen
+Pattern editor			Muster erstellen
+Color selection			Farbe auswählen
+Insert Color			Farbe einfügen
+yab-IDE Color selection			yab-IDE Farbe auswählen
+yab-IDE ASCII table			yab-IDE ASCII Tabelle
+ASCII table			ASCII Tabelle
+ Help 			 Hilfe 
+Introduction to the IDE			Einführung in die IDE
+german			Deutsch
+english			Englisch
+yab Commands			yab Befehle
+Yabasic manual			Yabasic Beschreibung
+Online resources			Internetverknüpfungen
+Enable auto completion			Aktiviere Autovervollständigung
+Number of characters for starting completion:			Anzahl Zeichen für Autovervollständigung:
+Note: You have to restart the IDE to update the autocompletion when removing entries.			Notiz: Sie müssen die IDE neustarten, wenn Sie aus der nebenstehenden Liste Einträge entfernt haben.
+New Entry			Neuer Eintrag
+Add New Entry			Neuer Eintrag hinzufügen
+Remove Entry			Eintrag entfernen
+Factory Settings			Grundeinstellung
+General			Haupteinstellung
+How many clicks on - Save - do a Backup?			Wieviele Klicks auf - Speichern - um eine Sicherung zu erstellen?
+Number of spaces per tab:			Anzahl Zeichen pro Tabulator:
+Ask about saving before running a program			Fragen: Speichern, bevor ein Programm ausgeführt wird.
+Show warning when reformating sourcecode did not close all loops and conditions			Warnung anzeigen, wenn beim Neuformatieren des Quellcodes nicht alle Schleifen und Bedingungen geschlossen wurden
+Show warning before undo reformating			Zeigen eine Warnung, bevor die Formatierung rückgängig gemacht wird.
+Show warning before applying Replace All			Zeigen eine Warnung an, bevor Alle ersetzen angewendet wird.
+Select font for editor:			Font auswählen für den Editor
+Font Family			Font Familie
+Font Style			Font Stil
+Font Size			Font größe
+Environment			Umgebung
+Language			Sprache
+Directories			Verzeichnisse
+Buildfactory			Build Maschine
+Yes / No			Ja / Nein
+HTML-Settings			HTML-Einstellungen
+META Settings			META Einstellungen
+Title:			Titel:
+Author:			Autor:
+Description:			Beschreibung:
+Keywords:			Schlüsselwörter:
+don't allow searchengines to add your site into there database			Suchmaschinen nicht erlauben, Ihre Websites in die Datenbank aufzunehmen
+Take over			Übernehmen
+Reminder for installed buildfactory			Erinnerung für installierte Build Maschine
+Note: Only change the directories, when you know what you are doing!			Hinweis: Ändern Sie die Verzeichnisse nur, wenn Sie wissen, was Sie tun!
+Default yab Binary:			Standard yab Binary:
+Default yab Directory:			Standard yab Verzeichnis:
+Use automatic localization			Benutze automatische Übersetzung
+Note: You have to restart the IDE to update the			Notiz: Sie müssen die IDE neustarten, Notiz: Sie müssen die IDE neustarten, wenn Sie aus der
+autocompletion when removing entries.			nebenstehenden Liste Einträge entfernt haben.
+New Entry:			Neuer Eintrag:
+ Files 			 Dateien 
+Restart yab-IDE to change localization			Starte die IDE neu um die Änderung aktiv zu machen.
