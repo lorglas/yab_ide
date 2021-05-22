@@ -3939,10 +3939,11 @@ sub KillTeam(programName$)
 	return found
 end sub
 
-// Load the syntax tree into the given tree box from the TreeFile$ file.
+// Load the syntax tree into the given tree box from the translate$ file.
 sub SyntaxLoadTree(TreeFile$, TreeBoxID$)
 //helpfile$="/Share/Projekte/c/yab/yab_documentation/data/Help_EN"
 helpfile$=TreeFile$
+
 x=0
 i=0
 	auslesen=open(helpfile$, "r")
@@ -4030,18 +4031,19 @@ i=0
 	next treezeilen
 end sub
 sub right_side(entrynumber)
+//print TreeFile$
 	TEXTEDIT CLEAR "Text"+str$(MAXFILES+1)
 	box_header$ = TREEBOX GET$ "HelpTree", entrynumber
 	
 	fileload$=d$(entrynumber*6)
-	handleA=open(fileload$, "r")
+	handleA=open(documentation_directory$+"/"+fileload$, "r")
 	while (not EOF(handleA))
 		line input #handleA information$
 		information$=information$+"\n"
 		TEXTEDIT ADD "Text"+str$(MAXFILES+1),information$
 		//boxview SET "ViewBox", "Label", box_header$
 	wend
-	close(auslesen)
+	close(handleA)
 end sub
 sub SyntaxLoadTree1(TreeFile$, TreeBoxID$)
 	//TreeFile$="/Share/Projekte/c/yab/yab_ide/data/Help_En.dat"
