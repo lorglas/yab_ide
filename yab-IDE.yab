@@ -429,9 +429,9 @@ while(inloop)
 				if(globalCurrentText>0) then
 					new_settings_dir$="/boot/home/config/settings/yab-ide/"
 					//err = printer globalAllNames$(globalCurrentText), globalConfigDir$+"printersetup", "Text"+str$(globalCurrentText) //globalConfigDir$+
-					print globalAllNames$(globalCurrentText)+" "+ new_settings_dir$+"printersetup  Text"+str$(globalCurrentText)
+					//print globalAllNames$(globalCurrentText)+" "+ new_settings_dir$+"printersetup  Text"+str$(globalCurrentText)
 					err = printer "yab-ide", new_settings_dir$+"printersetup", "Text"+str$(globalCurrentText) //globalConfigDir$+
-					print err
+					print "Printing error (If Zero all its ok):"+str$(err)
 					//if(err = 4) then
 					//	printer setup "/tmp/printersetup"
 					//	err = printer globalAllNames$(globalCurrentText), "/tmp/printersetup", "Text"+str$(globalCurrentText)
@@ -1444,8 +1444,8 @@ sub OpenMainWindow()
 	for i=1 to MAXFILES
 		// textedit 37,0 to settingsWidth-settingsVSplitDivider-12,settingsHSplitDivider-1, "Text"+str$(i), 3, "Stack"+str$(i)
 		textedit 1,0 to settingsWidth-settingsVSplitDivider-17,settingsHSplitDivider-5, "Text"+str$(i), 3, "Stack"+str$(i)
-		textedit set "Text"+str$(i), "wordwrap", false
-		textedit set "Text"+str$(i), "textwidth", 4000
+		textedit set "Text"+str$(i), "wordwrap", true
+		textedit set "Text"+str$(i), "textwidth", 595
 		textedit set "Text"+str$(i), "tabwidth", settingsTabSpaces*7
 		textedit set "Text"+str$(i), "font", settingsFontFamily$+","+settingsFontStyle$+","+str$(settingsFontSize)
 		textedit set "Text"+str$(i), "autoindent", settingsAutoIndent
@@ -4005,7 +4005,12 @@ i=0
 		treebox add name_baummenu$, d$(treezeilen), entry_tree$,false	
 	elseif (d$(treezeilen+3)="") then
 		if(instr(d$(treezeilen+2),"_")) then
-			entry_tree$=mid$(d$(treezeilen+2),2)
+			if (mid$(d$(treezeilen+2),2)="chr$(47)chr$(47)")then
+				entry_tree$="//"
+			//print mid$(d$(treezeilen+2),2)
+			else
+				entry_tree$=mid$(d$(treezeilen+2),2)
+			endif
 		else
 			entry_tree$=d$(treezeilen+2)
 		endif
@@ -4305,11 +4310,13 @@ sub LoadOpenFiles()
 				text$ = ""
 				while(not eof(handle))
 					t$ = GetLine$(handle)+"\n"
-					if(len(t$)*8>4000) textedit set "Text"+str$(j), "textwidth", len(t$)*8+8
+					if(len(t$)*8>4000) textedit set "Text"+str$(j), "textwidth", len(t$)*8+8 
+					//print len(t$)*8+8
 					text$ = text$ + t$
 				wend
 				close(handle)
 				globalCurrentText = j
+				//textedit set "Text"+str$(globalCurrentText), "textwidth",595
 				textedit add "Text"+str$(globalCurrentText), text$
 				textedit set "Text"+str$(globalCurrentText), "changed", false
 				textedit set "Text"+str$(globalCurrentText), "gotoline", ReadLineFromAttr(globalAllNames$(j))
