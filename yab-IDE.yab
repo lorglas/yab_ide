@@ -1445,7 +1445,7 @@ sub OpenMainWindow()
 		// textedit 37,0 to settingsWidth-settingsVSplitDivider-12,settingsHSplitDivider-1, "Text"+str$(i), 3, "Stack"+str$(i)
 		textedit 1,0 to settingsWidth-settingsVSplitDivider-17,settingsHSplitDivider-5, "Text"+str$(i), 3, "Stack"+str$(i)
 		textedit set "Text"+str$(i), "wordwrap", true
-		textedit set "Text"+str$(i), "textwidth", 595
+		textedit set "Text"+str$(i), "textwidth", settingsWidth-settingsVSplitDivider-20
 		textedit set "Text"+str$(i), "tabwidth", settingsTabSpaces*7
 		textedit set "Text"+str$(i), "font", settingsFontFamily$+","+settingsFontStyle$+","+str$(settingsFontSize)
 		textedit set "Text"+str$(i), "autoindent", settingsAutoIndent
