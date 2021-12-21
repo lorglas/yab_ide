@@ -8,7 +8,7 @@ doc
 doc The yab-IDE provides you with an integrated development suite for yab
 doc Enjoy.
 
-versionnumber$="2.3.3"
+versionnumber$="2.3.4"
 
 //Search Directories
 app_directory$=trim$(system$("finddir B_APPS_DIRECTORY"))+"/yab-IDE/"
@@ -122,7 +122,7 @@ if(LoadSettings() = 1) then
 	settingsFullEditor = false
 	settingsVSplitDivider = 180
 	settingsV2SplitDivider = 41
-	settingsHSplitDivider = settingsHeight-240
+	settingsHSplitDivider = settingsHeight-140
 	settingsCalcPatternX = 200
 	settingsCalcPatternY = 150
 	settingsColorSelectX = 100
@@ -220,7 +220,7 @@ while(inloop)
 	n = split(message$, msg$(), "|")
 	
 	for i = 1 to n
-		//print msg$(1)
+		print msg$(1)
 		
 		if(DEBUG and msg$(i)<>"") then
 			//print msg$(i)
@@ -1439,21 +1439,27 @@ sub OpenMainWindow()
 	// a stackview with textedits in the upper right splitview
 	// implement a dynamic stackview in future!
 	// stackview 0,0 to settingsWidth-settingsVSplitDivider-11,settingsHSplitDivider-1, "Stack", MAXFILES+2, "HSplit1"
+	layout "all", "V2Split2" 
 	stackview 0,0 to settingsWidth-settingsVSplitDivider-15,settingsHSplitDivider-1, "Stack", MAXFILES+2, "V2Split2"
+		
 	stackview 0,-4 to settingsV2SplitDivider,settingsHSplitDivider-1, "Lines", MAXFILES+2, "V2Split1"
+	layout "all", "Stack"+str$(MAXFILES+1)
 	for i=1 to MAXFILES
+	
 		// textedit 37,0 to settingsWidth-settingsVSplitDivider-12,settingsHSplitDivider-1, "Text"+str$(i), 3, "Stack"+str$(i)
 		textedit 1,0 to settingsWidth-settingsVSplitDivider-17,settingsHSplitDivider-5, "Text"+str$(i), 3, "Stack"+str$(i)
+		
 		textedit set "Text"+str$(i), "wordwrap", true
-		textedit set "Text"+str$(i), "textwidth", settingsWidth-settingsVSplitDivider-20
+		//textedit set "Text"+str$(i), "textwidth", settingsWidth-settingsVSplitDivider-20
 		textedit set "Text"+str$(i), "tabwidth", settingsTabSpaces*7
 		textedit set "Text"+str$(i), "font", settingsFontFamily$+","+settingsFontStyle$+","+str$(settingsFontSize)
 		textedit set "Text"+str$(i), "autoindent", settingsAutoIndent
-
-		// layout "left,top,bottom", "Lines"+str$(i)
+	//layout "top,left,bottom,right", "Stack"+str$(i)
+		
 		// view 0,0 to 36,settingsHSplitDivider-1, "Lines"+str$(i), "LineStack"+str$(i)
-		draw set settingsFontFamily$+","+settingsFontStyle$+","+str$(settingsFontSize), "Lines"+str$(i)
-		layout "standard", "Stack"+str$(i)
+		//draw set settingsFontFamily$+","+settingsFontStyle$+","+str$(settingsFontSize), "Lines"+str$(i)
+		//layout "Standard", "Stack"+str$(i)
+		
 
 		textedit set "Text"+str$(i), "autocomplete-start", settingsACNumChar
 		
@@ -1507,8 +1513,8 @@ sub OpenMainWindow()
 			close(handle)
 		endif
 	next i
-
-	textedit 1,0 to settingsWidth-settingsVSplitDivider-12-5,settingsHSplitDivider-2, "Text"+str$(MAXFILES+1), 1, "Stack"+str$(MAXFILES+1)
+	
+	textedit 1,0 to settingsWidth-settingsVSplitDivider-17,settingsHSplitDivider-5, "Text"+str$(MAXFILES+1), 1, "Stack"+str$(MAXFILES+1)
 	textedit set "Text"+str$(MAXFILES+1), "font", settingsFontFamily$+","+settingsFontStyle$+","+str$(settingsFontSize)
 	textedit set "Text"+str$(MAXFILES+1), "editable", false
 	textedit color "Text"+str$(MAXFILES+1), "color1", "Name:"
@@ -1750,7 +1756,7 @@ end sub
 
 // Update the line numbering
 sub UpdateLines(starty, height, topline, fontHeight)
-	local i, pos
+	local i, pos,y
 	local t$
 	if(globalCurrentText > 0) then
 		pos = splitview get "V2Split", "Divider" - 3
@@ -1762,17 +1768,21 @@ sub UpdateLines(starty, height, topline, fontHeight)
 		
 		//for i=0 to height //step globalRealFontSize	
 	
-			//if (topline>0) then
-			//	t$ = str$(i+starty+topline) 
-			//else
-			//	t$= str$(i+starty)
-			//endif //str$(int(i/fontHeight)+topline+1)
-			//draw text pos-(draw get "text-width", t$, "Lines"+str$(globalCurrentText)),i*globalRealFontSize, t$, "Lines"+str$(globalCurrentText)
+		//	if (topline>0) then
+		//		t$ = str$(i+starty+topline) 
+		//	else
+		//		t$= str$(i+starty)
+		//	endif //str$(int(i/fontHeight)+topline+1)
+		//	draw text pos-(draw get "text-width", t$, "Lines"+str$(globalCurrentText)),i*globalRealFontSize, t$, "Lines"+str$(globalCurrentText)
 		//next i
+		//print topline
 		
 		for i=fontHeight-1-starty to height step fontHeight
-			t$ = str$(int(i/fontHeight)+topline+1)
-			draw text pos-(draw get "text-width", t$, "Lines"+str$(globalCurrentText)),i, t$, "Lines"+str$(globalCurrentText)
+			
+				t$ = str$(int(i/fontHeight)+topline+1)
+				
+				draw text pos-(draw get "text-width", t$, "Lines"+str$(globalCurrentText)),i, t$, "Lines"+str$(globalCurrentText)
+		
 		next i
 	endif
 	return
