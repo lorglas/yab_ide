@@ -190,7 +190,7 @@ while(not quitting)
 		select$ = popupmenu 120,270, "Foo|--|Bar", "Box2"
 	elsif(instr(msg$, "File")) then
 		// filepanel
-		select$ = filepanel "Load-File", "Example Filepanel", "/boot/home"
+		select$ = filepanel "Load-File", "Example Filepanel", "/boot/home",""
 	elsif(instr(msg$, "Stack1")) then
 		// set stackview
 		stackview set "StackView", 1
